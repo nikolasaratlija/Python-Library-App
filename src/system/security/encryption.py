@@ -5,7 +5,7 @@ key = 5  # 'secret' key for the caesar cypher
 
 def encrypt(file_to_encrypt):
     # target file to encrypt
-    file = open(f"database/{file_to_encrypt}", "rb")
+    file = open(f"src/database/{file_to_encrypt}", "rb")
     byte_array = file.read()
     file.close()
 
@@ -13,7 +13,7 @@ def encrypt(file_to_encrypt):
     encrypted_byte_list = [value ^ key for index, value in enumerate(byte_array)]
 
     # write encrypted bytes to new file
-    encrypted_file = open(f"database/ENCRYPTED-{file_to_encrypt}", "wb+")
+    encrypted_file = open(f"src/database/ENCRYPTED-{file_to_encrypt}", "wb+")
     encrypted_file.write(bytearray(encrypted_byte_list))
     encrypted_file.close()
 
