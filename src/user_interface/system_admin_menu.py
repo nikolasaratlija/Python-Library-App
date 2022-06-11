@@ -5,7 +5,7 @@ from src.system.roles.super_admin import SuperAdmin
 class SystemAdminMenu(AdvisorMenu):
     def __init__(self):
         super().__init__()
-        self._add_label("System Admin Options: ")
+        self._add_label("System Admin Options")
         self._add_menu_option(self.add_advisor, "Add New Advisor")
         self._add_menu_option(self.modify_advisor, "Modify Existing Advisor")
         self._add_menu_option(self.delete_advisor, "Delete Advisor")
