@@ -26,7 +26,7 @@ class Menu:  # abstract class
 
     def _add_label(self, display):
         if self._options:
-            highest_listing = max([number[1] for number in self._options])
+            highest_listing = max([number[1] for number in self._options]) + 1
             self._label.append((highest_listing, display))
         else:
             self._label.append((1, display))
