@@ -4,6 +4,7 @@ from .system_admin_menu import SystemAdminMenu
 class SuperAdminMenu(SystemAdminMenu):
     def __init__(self):
         super().__init__()
+        self._add_label("Super Admin Options:")
         self._add_menu_option(self.add_admin, "Add New Admin")
         self._add_menu_option(self.update_admin, "Update Existing Admin")
         self._add_menu_option(self.delete_admin, "Delete Admin")
