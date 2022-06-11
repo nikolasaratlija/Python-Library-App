@@ -7,7 +7,7 @@ from src.system.context import Context
 class AdvisorMenu(Menu):
     def __init__(self):
         super().__init__()
-        self._add_label("Advisor Admin Options")
+        self._add_label("Advisor Options")
         self._add_menu_option(self.add_member, "Add New Member")
         self._add_menu_option(self.find_member, "Find Member")
         self._add_menu_option(self.modify_member, "Modify Existing Member")
