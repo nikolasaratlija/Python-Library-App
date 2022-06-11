@@ -46,9 +46,9 @@ class Menu:  # abstract class
         """ Displays menu options that the user can choose """
         for option in self._options:
 
-            for separation_text in self._label:
-                if separation_text[0] == option[1]:
-                    print("\n==== " + separation_text[1] + " ====")
+            for label in self._label:
+                if label[0] == option[1]:
+                    print("\n==== " + label[1] + " ====")
 
             print(f"[{option[1]}] {option[2]}")
 
