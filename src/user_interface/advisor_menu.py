@@ -1,6 +1,6 @@
 from .menu import Menu
-from src.system.roles.advisor import Member
-from src.system.context import Context
+from src.system.roles.member import Member
+import src.system.roles.advisor_service as advisor_service
 from src.user_interface.util.form import *
 from src.system.security.validation import *
 
@@ -33,7 +33,7 @@ class AdvisorMenu(Menu):
 
         form.prompt_form()
 
-        Context.user.add_member(
+        advisor_service.add_member(
             Member(first_name_prompt.get_value(), last_name_prompt.get_value()))
 
     def find_member(self):

@@ -1,6 +1,5 @@
 from .advisor_menu import AdvisorMenu
-from src.system.context import Context
-from src.system.roles.super_admin import SystemAdmin
+import src.system.roles.system_admin_service as system_admin_service
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -34,7 +33,9 @@ class SystemAdminMenu(AdvisorMenu):
         pass
 
     def read_all_users(self):
-        SystemAdmin().read_all_users()
+        users = system_admin_service.read_all_users()
+        for user in users:
+            print(f"{user[0]}, {user[1]}, {user[2]}\n")
 
     def delete_member(self):
         pass
