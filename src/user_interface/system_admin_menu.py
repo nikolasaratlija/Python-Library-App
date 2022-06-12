@@ -9,7 +9,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._add_menu_option(self.add_advisor, "Add New Advisor")
         self._add_menu_option(self.modify_advisor, "Modify Existing Advisor")
         self._add_menu_option(self.delete_advisor, "Delete Advisor")
-        self._add_menu_option(self.rest_advisor_password, "Reset Advisor Password")
+        self._add_menu_option(self.reset_advisor_password, "Reset Advisor Password")
         self._add_menu_option(self.read_all_users, "List All Users")
         self._add_menu_option(self.delete_member, "Delete Member")
         self._add_menu_option(self.backup, "Back-Up System")
@@ -29,13 +29,13 @@ class SystemAdminMenu(AdvisorMenu):
     def delete_advisor(self):
         pass
 
-    def rest_advisor_password(self):
+    def reset_advisor_password(self):
         pass
 
     def read_all_users(self):
         users = system_admin_service.read_all_users()
         for user in users:
-            print(f"{user[0]}, {user[1]}, {user[2]}\n")
+            print('{:<20s} {:<20s}'.format(f"Name: {user[0]},", f"Role: {user[1]}"))
 
     def delete_member(self):
         pass

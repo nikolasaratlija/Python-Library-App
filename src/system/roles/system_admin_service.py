@@ -21,7 +21,9 @@ def read_all_users():
     # TODO: try catch
     conn = get_connection()
     c = conn.cursor()
-    c.execute("SELECT * FROM member")
+    c.execute("SELECT username, r.name "
+              "FROM users u "
+              "LEFT JOIN roles r on u.role_id = r.id")
     members = c.fetchall()
     conn.close()
     return members

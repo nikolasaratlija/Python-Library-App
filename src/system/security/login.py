@@ -11,7 +11,7 @@ from src.user_interface.system_admin_menu import SystemAdminMenu
 def try_login_user(username, password):
     con = get_connection()
     c = con.cursor()
-    c.execute("SELECT * FROM employees WHERE username=? AND password=?", (username, password))
+    c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
     return c.fetchone()
 
 
