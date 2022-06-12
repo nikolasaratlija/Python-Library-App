@@ -13,12 +13,11 @@ def delete_advisor():
     pass
 
 
-def rest_advisor_password():
+def reset_advisor_password():
     pass
 
 
 def read_all_users():
-    # TODO: try catch
     conn = get_connection()
     c = conn.cursor()
     c.execute("SELECT username, r.name "
