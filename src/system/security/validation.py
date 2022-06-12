@@ -13,14 +13,16 @@ def validate_input(string, validation: Validation = None):
 
     if validation:
         if match_regex(validation.regex, string) is False:
-            return False, validation.error_message
+            return False
 
     return True  # string passed all checks
 
 # validation objects, contains regexes and error messages
 PASSWORD = Validation(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,18}$",
-    "Incorrect password, format must be TODO")
+    "Incorrect password format. Password must be between 6 and 30 characters and "
+    "must have a combination of at least one lowercase letter, one uppercase letter, "
+    "one digit, and one special character such as ~!@#$%&_-+=`|\(){}[]:;'<>,.?/")
 
 PHONE = Validation(
     "^[0-9]{6}$",
@@ -28,7 +30,7 @@ PHONE = Validation(
 
 EMAIL = Validation(
     "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$",
-    "Incorrect email format. Format must be TODO")
+    "Incorrect email format. Example: sample@email.com")
 
 ZIPCODE = Validation(
     "^[0-9]{4}[A-Z]{2}$",
