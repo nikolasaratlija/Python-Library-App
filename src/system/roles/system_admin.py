@@ -1,4 +1,5 @@
 from .advisor import Advisor
+from src.database.connection import get_connection
 
 
 class SystemAdmin(Advisor):
@@ -15,7 +16,13 @@ class SystemAdmin(Advisor):
         pass
 
     def read_all_users(self):
-        pass
+        # TODO: not finished
+        conn = get_connection()
+        c = conn.cursor()
+        c.execute("SELECT * FROM member")
+        members = c.fetchall()
+        for member in members:
+            print(f"{member[0]}, {member[1]}, {member[2]}\n")
 
     def delete_member(self):
         pass

@@ -1,5 +1,6 @@
 from .advisor_menu import AdvisorMenu
-from src.system.roles.super_admin import SuperAdmin
+from src.system.context import Context
+from src.system.roles.super_admin import SystemAdmin
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -33,7 +34,7 @@ class SystemAdminMenu(AdvisorMenu):
         pass
 
     def read_all_users(self):
-        pass
+        SystemAdmin().read_all_users()
 
     def delete_member(self):
         pass

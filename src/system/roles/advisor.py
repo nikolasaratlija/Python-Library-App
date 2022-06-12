@@ -1,4 +1,5 @@
 from src.system.roles.member import Member
+from src.database.connection import get_connection
 
 
 class Advisor:
@@ -6,11 +7,15 @@ class Advisor:
         pass
 
     def add_member(self, member: Member):
-        print("TEST FUNCTION\n"
-              "Added member with attributes:\n"
-              f"{member.first_name}\n"
-              f"{member.last_name}\n"
-              )
+        # TODO: not finished
+        con = get_connection()
+        c = con.cursor()
+        c.execute("INSERT INTO member (first_name, last_name) VALUES (?, ?)",
+                  (member.first_name, member.last_name))
+        con.commit()
+        con.close()
+        print("Member Added")
+
 
     def modify_member(self):
         pass
