@@ -9,10 +9,12 @@ class Prompt:
 
     def prompt_input(self):
         while True:
-            value = input(f"Please enter a value for '{self.label}':")
+            value = input(f"Please enter a value for '{self.label}': ")
 
-            if not validate_input(value, self.validation):
-                print(self.validation.error_message)
+            validation = validate_input(value, self.validation)
+
+            if not validation[0]:
+                print(validation[1])
             else:
                 self._value = value
                 break

@@ -9,13 +9,17 @@ class Validation:
 
 def validate_input(string, validation: Validation = None):
     if is_valid_length(string) is False:
-        return False
+        return False, "Input exceeds maximum length"
+
+    if is_not_empty(string) is False:
+        return False, NOT_EMPTY_OR_WHITESPACE.error_message
 
     if validation:
         if match_regex(validation.regex, string) is False:
-            return False
+            return False, validation.error_message
 
-    return True  # string passed all checks
+    return True, None  # string passed all checks
+
 
 # validation objects, contains regexes and error messages
 PASSWORD = Validation(
@@ -36,11 +40,20 @@ ZIPCODE = Validation(
     "^[0-9]{4}[A-Z]{2}$",
     "Incorrect zipcode format. Format must be DDDDXX")
 
+NOT_EMPTY_OR_WHITESPACE = Validation(
+    "^$|\s+",
+    "Input is empty. Please enter a valid input"
+)
+
 
 # check is string is under 255 characters
 def is_valid_length(string):
     # TODO: Log suspicious activity
     return len(string) < 255
+
+
+def is_not_empty(string):
+    return match_regex(NOT_EMPTY_OR_WHITESPACE.regex, string) is False
 
 
 # utility function for checking whether a string matches a pattern

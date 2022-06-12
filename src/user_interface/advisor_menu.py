@@ -28,8 +28,8 @@ class AdvisorMenu(Menu):
         form = Form()
         form.add_prompt(first_name_prompt)
         form.add_prompt(last_name_prompt)
-        form.add_prompt(email_prompt)
-        form.add_prompt(zip_code_prompt)
+        # form.add_prompt(email_prompt)
+        # form.add_prompt(zip_code_prompt)
 
         form.prompt_form()
 
