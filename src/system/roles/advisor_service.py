@@ -21,5 +21,11 @@ def modify_member():
     pass
 
 
-def read_member():
-    pass
+def read_member(member_id):
+    #TODO: not finished, need to test and see return
+    con = get_connection()
+    c = con.cursor()
+    c.execute("SELECT * FROM members WHERE id = ?", (member_id,))
+    result = c.fetchone()
+    con.close()
+    return result
