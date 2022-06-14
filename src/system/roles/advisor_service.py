@@ -2,8 +2,13 @@ from src.system.roles.member import Member
 from src.database.connection import get_connection
 
 
-def update_own_password():
-    pass
+def update_own_password(user_id, new_password):
+    con = get_connection()
+    c = con.cursor()
+    c.execute("UPDATE users SET password = ? WHERE id = ?",(new_password, user_id))
+    con.commit()
+    con.close()
+    print("Password Updated")
 
 
 def add_member(member: Member):
@@ -22,7 +27,6 @@ def modify_member():
 
 
 def read_member(member_id):
-    #TODO: not finished, need to test and see return
     con = get_connection()
     c = con.cursor()
     c.execute("SELECT * FROM members WHERE id = ?", (member_id,))
