@@ -9,12 +9,12 @@ _LOG_FILE = 'src/system/logging/log.log'
 _LOG_FILE_ENCRYPTED = 'src/system/logging/ENCRYPTED-log.log'
 
 
-def decrypt_files():
+def decrypt_all_files():
     _shift_file(_LOG_FILE_ENCRYPTED, _LOG_FILE)  # decrypt log
     _shift_file(_DATABASE_FILE_ENCRYPTED, _DATABASE_FILE)  # decrypt database
 
 
-def encrypt_files():
+def encrypt_all_files():
     _shift_file(_LOG_FILE, _LOG_FILE_ENCRYPTED)  # encrypt log file
     _shift_file(_DATABASE_FILE, _DATABASE_FILE_ENCRYPTED)  # encrypt database
 
