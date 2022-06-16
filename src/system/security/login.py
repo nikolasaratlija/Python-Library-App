@@ -1,6 +1,8 @@
 from src.database.connection import get_connection
 from src.system.exceptions import LoginError
 
+from src.system.context import Context
+
 from src.system.roles.roles import Roles
 
 from src.user_interface.advisor_menu import AdvisorMenu
@@ -15,8 +17,10 @@ def try_login_user(username, password):
     return c.fetchone()
 
 
-def login(role_id):
+def login(user_id, name, role_id):
     """ Opens a menu based on the role id of the logged in employee """
+    Context.user_id = user_id
+    Context.user_name = name
 
     if role_id is Roles.SUPER_ADMIN.value:
         SuperAdminMenu().run()

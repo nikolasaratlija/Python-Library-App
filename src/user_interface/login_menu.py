@@ -26,4 +26,4 @@ class LoginMenu(Menu):
             else:
                 break
 
-        login(data[3])
+        login(data[0], data[1], data[3])

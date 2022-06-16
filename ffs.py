@@ -1,14 +1,16 @@
 from src.user_interface.login_menu import LoginMenu
 from src.user_interface.super_admin_menu import SuperAdminMenu
 
-import src.system.roles.advisor_service as advisor_service
-import src.system.roles.system_admin_service as sytem_a_s
-import src.system.roles.super_admin_service as super_a_s
+from src.system.context import Context
+from src.system.logging.logger import log
 
-
+Context.user_id = 1
+Context.user_name = 'nikola'
 
 # menu = SuperAdminMenu()
 # menu.run()
+
+log('TEST LOG', 'log message')
 
 # if __name__ == "__main__":
 #     login = LoginMenu()
