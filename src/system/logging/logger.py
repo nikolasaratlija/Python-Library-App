@@ -2,7 +2,7 @@ import logging
 from src.system.context import Context
 
 logging.basicConfig(
-    filename='src/database/example.log',
+    filename='src/system/logging/log.log',
     level=logging.DEBUG,
     format='%(username)s | %(asctime)s | %(description)s | %(message)s | %(suspicious)s',
     datefmt='%d-%m-%Y %I:%M:%S')
