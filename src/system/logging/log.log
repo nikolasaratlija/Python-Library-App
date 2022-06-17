@@ -1,1 +1,7 @@
 nikola | 17-06-2022 11:27:17 | Fatal Database Error | An error occurred while trying to establish a database connection in 'get_connection()' | No
+nikola | 17-06-2022 11:31:27 | Fatal Database Error | An error occurred while trying to establish a database connection in 'get_connection()' | No
+nikola | 17-06-2022 11:32:08 | Create backup error | The required files are not present in the system. Cannot continue with the operation | No
+nikola | 17-06-2022 11:33:09 | Create backup error | The required files are not present in the system. Cannot continue with the operation | No
+nikola | 17-06-2022 11:38:45 | Log file read by member | Log file read by member | No
+nikola | 17-06-2022 11:39:00 | Log file read by member | Log file read by member | No
+nikola | 17-06-2022 11:40:35 | Log file read by member | Log file read by member | No

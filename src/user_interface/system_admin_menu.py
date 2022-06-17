@@ -13,7 +13,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._add_menu_option(self.read_all_users, "List All Users")
         self._add_menu_option(self.delete_member, "Delete Member")
         self._add_menu_option(self.backup_restore, "Restore System From Backup")
-        self._add_menu_option(self.backup_create, "Backup System")
+        self._add_menu_option(self.backup_create, "Create Backup")
         self._add_menu_option(self.read_logs, "Read logs")
 
     def run(self):
@@ -64,4 +64,5 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def read_logs(self):
-        pass
+        print(system_admin_service.read_logs())
+        self._back()

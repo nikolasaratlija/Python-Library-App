@@ -1,5 +1,7 @@
 from src.system.context import Context
 import src.system.backup.backup as backup
+from src.system.logging.logger import log
+
 
 def add_advisor(advisor_id, advisor_username, advisor_pass):
     con = Context.db_connection
@@ -57,4 +59,10 @@ def restore_backup():
 
 
 def read_logs():
-    pass
+    try:
+        with open('src/system/logging/log.log') as log_file:
+            log('Log file read by member', 'Log file read by member')
+            return log_file.read()
+    except FileNotFoundError:
+        log('read_logs() error', 'Log file could not be found')
+        return 'Error: Log file could not be found'
