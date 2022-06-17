@@ -43,4 +43,15 @@ class AdvisorMenu(Menu):
         pass
 
     def update_own_password(self):
-        pass
+        user_id_prompt = Prompt("User id")
+        new_pass_prompt = Prompt("New password")
+        form = Form()
+        form.add_prompt(user_id_prompt)
+        form.add_prompt(new_pass_prompt)
+        form.prompt_form()
+
+        result = advisor_service.update_own_password(user_id_prompt.get_value(),new_pass_prompt.get_value())
+        if result == True:
+            print("Updated Password")
+        else:
+            print("No advisor found to update, entered correct id?")
