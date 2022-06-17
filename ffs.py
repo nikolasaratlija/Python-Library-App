@@ -1,12 +1,8 @@
 from src.database.connection import get_connection
 from src.user_interface.login_menu import LoginMenu
 from src.user_interface.super_admin_menu import SuperAdminMenu
-
 from src.system.context import Context
-from src.system.logging.logger import log
-from src.system.security.encryption import encrypt_all_files, decrypt_all_files
 
-import src.system.roles.advisor_service as advisor
 
 Context.user_id = 1
 Context.user_name = 'nikola'
