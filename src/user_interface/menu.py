@@ -36,11 +36,14 @@ class Menu:  # abstract class
 
     def _read_input(self):
         """ Reads input and executes a function that corresponds to that specified input """
-        key = int(input())
+        try:
+            key = int(input())
 
-        for option in self._options:
-            if key == option[1]:
-                option[0]()
+            for option in self._options:
+                if key == option[1]:
+                    option[0]()
+        except ValueError:
+            self._read_input()
 
     def _display_options(self):
         """ Displays menu options that the user can choose """
