@@ -18,5 +18,6 @@ menu.run()
 # log('TEST LOG', 'log message')
 
 # if __name__ == "__main__":
+#     Context.db_connection = get_connection()
 #     login = LoginMenu()
 #     login.run()

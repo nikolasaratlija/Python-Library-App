@@ -21,14 +21,15 @@ def encrypt_all_files():
 
 def _shift_file(file, new_file_name):
     byte_list = _read_file_as_bytes(file)
-    _write_bytes_to_file(new_file_name, byte_list)
+    shifted_bytes = _byte_shift(byte_list)
+    _write_bytes_to_file(new_file_name, shifted_bytes)
 
 
 def _read_file_as_bytes(filename):
     file = open(f"{filename}", "rb")
     byte_list = file.read()
     file.close()
-    return _byte_shift(byte_list)
+    return byte_list
 
 
 def _byte_shift(byte_list):
