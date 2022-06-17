@@ -1,5 +1,5 @@
 from src.system.context import Context
-
+import src.system.backup.backup as backup
 
 def add_advisor(advisor_id, advisor_username, advisor_pass):
     con = Context.db_connection
@@ -48,8 +48,12 @@ def delete_member(member_id):
     print("Member Deleted")
 
 
-def backup():
-    pass
+def create_backup():
+    return backup.create_backup()
+
+
+def restore_backup():
+    return backup.restore_backup()
 
 
 def read_logs():

@@ -12,7 +12,8 @@ class SystemAdminMenu(AdvisorMenu):
         self._add_menu_option(self.reset_advisor_password, "Reset Advisor Password")
         self._add_menu_option(self.read_all_users, "List All Users")
         self._add_menu_option(self.delete_member, "Delete Member")
-        self._add_menu_option(self.backup, "Back-Up System")
+        self._add_menu_option(self.backup_restore, "Restore System From Backup")
+        self._add_menu_option(self.backup_create, "Backup System")
         self._add_menu_option(self.read_logs, "Read logs")
 
     def run(self):
@@ -40,8 +41,27 @@ class SystemAdminMenu(AdvisorMenu):
     def delete_member(self):
         pass
 
-    def backup(self):
-        pass
+    def backup_restore(self):
+        value = input("Are you sure you want to restore the system from backup? Type 'confirm' to confirm.\n")
+
+        if value == 'confirm':
+            result = system_admin_service.restore_backup()
+            print(result[1])
+        else:
+            print("System restore cancelled by user")
+
+        self._back()
+
+    def backup_create(self):
+        value = input("Are you sure you want to create a backup? Type 'confirm' to confirm.\n")
+
+        if value == 'confirm':
+            result = system_admin_service.create_backup()
+            print(result[1])
+        else:
+            print("System backup has been cancelled by user.")
+
+        self._back()
 
     def read_logs(self):
         pass
