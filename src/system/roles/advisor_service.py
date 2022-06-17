@@ -1,10 +1,10 @@
 from src.system.roles.member import Member
-from src.database.connection import get_connection
+from src.system.context import Context
 
 
 def update_own_password(user_id, new_password):
     password_updated = False
-    con = get_connection()
+    con = Context.db_connection
     c = con.cursor()
 
     c.execute("SELECT * FROM users WHERE (id = ? AND role_id = 3)", (user_id,))
@@ -19,18 +19,16 @@ def update_own_password(user_id, new_password):
         # print("No user found to update, entered correct id?") #LOG THIS
         password_updated = False
 
-    con.close()
     return password_updated
 
 
 def add_member(member: Member):
     # TODO: not finished
-    con = get_connection()
+    con = Context.db_connection
     c = con.cursor()
     c.execute("INSERT INTO members (first_name, last_name) VALUES (?, ?)",
               (member.first_name, member.last_name))
     con.commit()
-    con.close()
     print("Member Added")
 
 
@@ -39,11 +37,10 @@ def modify_member():
 
 
 def read_member(member_id):
-    con = get_connection()
+    con = Context.db_connection
     c = con.cursor()
     c.execute("SELECT * FROM members WHERE id = ?", (member_id,))
     result = c.fetchone()
-    con.close()
 
     if not result:
         return "User cannot be found!"

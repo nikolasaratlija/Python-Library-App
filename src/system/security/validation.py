@@ -42,8 +42,7 @@ ZIPCODE = Validation(
 
 NOT_EMPTY_OR_WHITESPACE = Validation(
     "^$|\s+",
-    "Input is empty. Please enter a valid input"
-)
+    "Input is empty. Please enter a valid input")
 
 
 # check is string is under 255 characters
