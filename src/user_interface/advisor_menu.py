@@ -36,6 +36,8 @@ class AdvisorMenu(Menu):
         advisor_service.add_member(
             Member(first_name_prompt.get_value(), last_name_prompt.get_value()))
 
+        self._back()
+
     def find_member(self):
         pass
 

@@ -8,8 +8,8 @@ from src.system.security.encryption import encrypt_all_files, decrypt_all_files
 # Context.user_id = 1
 # Context.user_name = 'nikola'
 
-# menu = SuperAdminMenu()
-# menu.run()
+menu = SuperAdminMenu()
+menu.run()
 
 # log('TEST LOG', 'log message')
 

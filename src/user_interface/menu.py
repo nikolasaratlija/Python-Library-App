@@ -22,7 +22,7 @@ class Menu:  # abstract class
     def _back(self):
         """ Usually ran after a certain task is completed, takes the user back a step"""
         input("\nPress Enter to go back to the Main Menu.")
-        self._previous_step.run()
+        self.run()
 
     def _add_label(self, display):
         if self._options:
