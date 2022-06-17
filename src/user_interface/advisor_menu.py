@@ -53,7 +53,7 @@ class AdvisorMenu(Menu):
         form.prompt_form()
 
         result = advisor_service.update_own_password(user_id_prompt.get_value(),new_pass_prompt.get_value())
-        if result == True:
+        if result:
             print("Updated Password")
         else:
             print("No advisor found to update, entered correct id?")

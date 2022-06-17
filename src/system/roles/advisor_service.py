@@ -10,13 +10,13 @@ def update_own_password(user_id, new_password):
     c.execute("SELECT * FROM users WHERE (id = ? AND role_id = 3)", (user_id,))
     result = c.fetchone()
 
-    if (result is not None):
-        c.execute("UPDATE users SET password = ? WHERE (id = ? AND role_id = 3)",(new_password, user_id))
+    if not result:
+        c.execute("UPDATE users SET password = ? WHERE (id = ? AND role_id = 3)", (new_password, user_id))
         con.commit()
-        #print("Password Updated") #LOG THIS
+        # print("Password Updated") #LOG THIS
         password_updated = True
     else:
-        #print("No user found to update, entered correct id?") #LOG THIS
+        # print("No user found to update, entered correct id?") #LOG THIS
         password_updated = False
 
     con.close()
@@ -45,7 +45,7 @@ def read_member(member_id):
     result = c.fetchone()
     con.close()
 
-    if (result is None):
+    if not result:
         return "User cannot be found!"
 
     return result
