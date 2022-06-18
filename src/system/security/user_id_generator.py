@@ -7,7 +7,7 @@ def generate_user_id():
     while True:
         new_id = _generate_random_id()
         if _check_id_validity(new_id):
-            return int_list_to_string(new_id)
+            return _int_list_to_string(new_id)
 
 
 def _generate_random_id():
