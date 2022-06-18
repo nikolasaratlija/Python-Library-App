@@ -22,8 +22,8 @@ class AdvisorMenu(Menu):
 
     def add_member(self):
         # TODO add fields
-        first_name = prompt_input(lambda: safe_input("Please enter First Name", is_not_empty_or_whitespace))
-        last_name = prompt_input(lambda: safe_input("Please enter Last Name", is_not_empty_or_whitespace))
+        first_name = prompt_input(lambda: safe_input("Please enter First Name", not_empty))
+        last_name = prompt_input(lambda: safe_input("Please enter Last Name", not_empty))
         # email_prompt = prompt_input(lambda: safe_input("Please enter First Name", is_email))
         # zip_code_prompt = prompt_input(lambda: safe_input("Please enter Zip Code", is_zipcode))
 

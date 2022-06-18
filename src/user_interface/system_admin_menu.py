@@ -25,7 +25,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._read_input()
 
     def add_advisor(self):
-        username = prompt_input(lambda: safe_input("Please enter Username", is_not_empty_or_whitespace))
+        username = prompt_input(lambda: safe_input("Please enter Username", not_empty))
         password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
         result = system_admin_service.add_advisor(username, password)
@@ -59,7 +59,7 @@ class SystemAdminMenu(AdvisorMenu):
             print('{:<20s} {:<20s}'.format(f"Name: {user[0]},", f"Role: {user[1]}"))
 
     def delete_member(self):
-        member_id = prompt_input(lambda: safe_input("Please enter Password", is_integer))
+        member_id = prompt_input(lambda: safe_input("Please enter Password", is_digit))
 
         result = system_admin_service.delete_member(member_id)
 
@@ -78,7 +78,8 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def backup_create(self):
-        value = input("Are you sure you want to create a backup? Type 'confirm' to confirm.\n")
+        value = safe_input("Are you sure you want to create a backup? Type 'confirm' to confirm.\n",
+                           not_empty)
 
         if value == 'confirm':
             result = system_admin_service.create_backup()

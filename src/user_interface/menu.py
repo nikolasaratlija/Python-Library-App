@@ -1,7 +1,7 @@
 import os
 from abc import abstractmethod
 from .util.safe_input import safe_input
-from src.system.security.validation import is_integer
+from src.system.security.validation import is_digit
 
 
 class Menu:  # abstract class
@@ -39,7 +39,7 @@ class Menu:  # abstract class
     def _read_input(self):
         """ Reads input and executes a function that corresponds to that specified input """
         try:
-            value = safe_input("", is_integer)
+            value = safe_input("", is_digit)
 
             for option in self._options:
                 if int(value) == option[1]:

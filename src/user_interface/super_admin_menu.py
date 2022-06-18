@@ -20,7 +20,7 @@ class SuperAdminMenu(SystemAdminMenu):
         self._read_input()
 
     def add_admin(self):
-        username = prompt_input(lambda: safe_input("Please enter Username", is_not_empty_or_whitespace))
+        username = prompt_input(lambda: safe_input("Please enter Username", not_empty))
         password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
         result = super_admin_service.add_admin(username, password)
@@ -32,7 +32,7 @@ class SuperAdminMenu(SystemAdminMenu):
         pass
 
     def delete_admin(self):
-        admin_id = prompt_input(lambda: safe_input("Please enter Admin ID", is_integer))
+        admin_id = prompt_input(lambda: safe_input("Please enter Admin ID", is_digit))
 
         form = Form()
         form.add_prompt(admin_id)
