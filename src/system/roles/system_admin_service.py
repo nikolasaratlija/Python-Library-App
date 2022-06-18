@@ -44,12 +44,13 @@ def reset_advisor_password(new_temp_password, advisor_id):
     print("Password Updated")
 
 
-def read_all_users():
+def read_all_users(search_parameters):
     con = Context.db_connection
     c = con.cursor()
-    c.execute("SELECT username, r.name "
-              "FROM users u "
-              "LEFT JOIN roles r on u.role_id = r.id")
+
+    sql, params = _read_users_query_builder(search_parameters)
+    c.execute(sql, params)
+
     members = c.fetchall()
     return members
 
@@ -83,3 +84,28 @@ def read_logs():
     except FileNotFoundError:
         log('read_logs() error', 'Log file could not be found')
         return 'Error: Log file could not be found'
+
+
+def _read_users_query_builder(search_parameters):
+    # TODO TRY CATCH
+    search_conditions = {
+        'id': 'm.id LIKE :id',
+        'username': 'username LIKE :username',
+        'role': 'r.name LIKE :role',
+    }
+
+    sql = "SELECT u.id, username, password, r.name " \
+          "FROM users u " \
+          "JOIN roles r on u.role_id = r.id"
+
+    conditions = []
+    params = {}
+
+    for key, value in search_parameters.items():
+        if key in search_conditions:
+            conditions.append(search_conditions[key])
+            params[key] = '%' + search_parameters[key] + '%'
+
+    where_statement = ' AND '.join(conditions)
+    sql += " WHERE " + where_statement
+    return sql, params
