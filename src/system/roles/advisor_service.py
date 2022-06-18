@@ -1,5 +1,6 @@
 from src.system.roles.member import Member
 from src.system.context import Context
+from src.system.security.user_id_generator import generate_user_id
 
 
 def update_own_password(user_id, new_password):
@@ -26,8 +27,11 @@ def add_member(member: Member):
     # TODO: not finished
     con = Context.db_connection
     c = con.cursor()
-    c.execute("INSERT INTO members (first_name, last_name) VALUES (?, ?)",
-              (member.first_name, member.last_name))
+
+    user_id = generate_user_id()
+
+    c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?)",
+              (user_id, member.first_name, member.last_name))
     con.commit()
     print("Member Added")
 

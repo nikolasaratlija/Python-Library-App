@@ -22,6 +22,10 @@ def validate_input(string, validation: Validation = None):
 
 
 # validation objects, contains regexes and error messages
+USERNAME = Validation(
+    "^[a-zA-Z][a-zA-Z0-9_'.]{5,10}$",
+    "Incorrect username format. username must be between 6 and 10 characters.")
+
 PASSWORD = Validation(
     "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,18}$",
     "Incorrect password format. Password must be between 6 and 30 characters and "
