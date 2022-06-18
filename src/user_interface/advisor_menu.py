@@ -45,12 +45,9 @@ class AdvisorMenu(Menu):
         pass
 
     def update_own_password(self):
-        new_pass_prompt = Prompt("password")  # TODO VALIDATION
-        form = Form()
-        form.add_prompt(new_pass_prompt)
-        form.prompt_form()
+        new_pass_prompt = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
-        result = advisor_service.update_own_password(new_pass_prompt.get_value())
+        result = advisor_service.update_own_password(new_pass_prompt)
         print(result[1])
 
         self._back()
