@@ -46,7 +46,7 @@ def reset_advisor_password(new_temp_password, advisor_id):
     print("Password Updated")
 
 
-def read_all_users(search_parameters):
+def read_all_users(search_parameters=None):
     con = Context.db_connection
     c = con.cursor()
 

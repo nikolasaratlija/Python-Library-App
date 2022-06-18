@@ -1,6 +1,8 @@
 from .advisor_menu import AdvisorMenu
 import src.system.roles.system_admin_service as system_admin_service
-from .util.form import Form, Prompt
+from .util.form import prompt_input
+from .util.safe_input import safe_input
+from src.system.security.validation import *
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -23,16 +25,10 @@ class SystemAdminMenu(AdvisorMenu):
         self._read_input()
 
     def add_advisor(self):
-        username = Prompt("username")  # TODO INPUT VALIDATION
-        password = Prompt("password")  # TODO INPUT VALIDATION
+        username = prompt_input(lambda: safe_input("Please enter Username", is_not_empty_or_whitespace))
+        password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
-        form = Form()
-        form.add_prompt(username)
-        form.add_prompt(password)
-
-        form.prompt_form()
-
-        result = system_admin_service.add_advisor(username.get_value(), password.get_value())
+        result = system_admin_service.add_advisor(username, password)
 
         print(result[1])
         self._back()
@@ -41,17 +37,18 @@ class SystemAdminMenu(AdvisorMenu):
         pass
 
     def delete_advisor(self):
-        advisor_id = Prompt("advisor_id")  # TODO INPUT VALIDATION
-
-        form = Form()
-        form.add_prompt(advisor_id)
-
-        form.prompt_form()
-
-        result = system_admin_service.delete_advisor(advisor_id.get_value())
-
-        print(result[1])
-        self._back()
+        # advisor_id = Prompt("advisor_id")  # TODO INPUT VALIDATION
+        #
+        # form = Form()
+        # form.add_prompt(advisor_id)
+        #
+        # form.prompt_form()
+        #
+        # result = system_admin_service.delete_advisor(advisor_id.get_value())
+        #
+        # print(result[1])
+        # self._back()
+        pass
 
     def reset_advisor_password(self):
         pass
@@ -62,14 +59,9 @@ class SystemAdminMenu(AdvisorMenu):
             print('{:<20s} {:<20s}'.format(f"Name: {user[0]},", f"Role: {user[1]}"))
 
     def delete_member(self):
-        member_id = Prompt("member_id")  # TODO INPUT VALIDATION
+        member_id = prompt_input(lambda: safe_input("Please enter Password", is_integer))
 
-        form = Form()
-        form.add_prompt(member_id)
-
-        form.prompt_form()
-
-        result = system_admin_service.delete_member(member_id.get_value())
+        result = system_admin_service.delete_member(member_id)
 
         print(result[1])
         self._back()

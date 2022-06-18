@@ -29,7 +29,7 @@ def add_member(member: Member):
     user_id = generate_user_id()
 
     try:
-        c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?)",
+        c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?, ?)",
                   (user_id, member.first_name, member.last_name))
         con.commit()
         log("Member Added", f"Member '#{user_id} has been added to the system'")

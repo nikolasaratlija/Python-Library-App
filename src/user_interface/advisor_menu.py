@@ -2,6 +2,7 @@ from .menu import Menu
 from src.system.roles.member import Member
 import src.system.roles.advisor_service as advisor_service
 from src.user_interface.util.form import *
+from .util.safe_input import safe_input
 from src.system.security.validation import *
 
 
@@ -21,21 +22,12 @@ class AdvisorMenu(Menu):
 
     def add_member(self):
         # TODO add fields
-        first_name_prompt = Prompt("First Name")
-        last_name_prompt = Prompt("Last Name")
-        email_prompt = Prompt("Email", EMAIL)
-        zip_code_prompt = Prompt("Zip Code", ZIPCODE)
+        first_name = prompt_input(lambda: safe_input("Please enter First Name", is_not_empty_or_whitespace))
+        last_name = prompt_input(lambda: safe_input("Please enter Last Name", is_not_empty_or_whitespace))
+        # email_prompt = prompt_input(lambda: safe_input("Please enter First Name", is_email))
+        # zip_code_prompt = prompt_input(lambda: safe_input("Please enter Zip Code", is_zipcode))
 
-        form = Form()
-        form.add_prompt(first_name_prompt)
-        form.add_prompt(last_name_prompt)
-        # form.add_prompt(email_prompt)
-        # form.add_prompt(zip_code_prompt)
-
-        form.prompt_form()
-
-        advisor_service.add_member(
-            Member(first_name_prompt.get_value(), last_name_prompt.get_value()))
+        advisor_service.add_member(Member(first_name, last_name))
 
         self._back()
 

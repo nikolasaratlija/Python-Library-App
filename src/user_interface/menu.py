@@ -1,5 +1,7 @@
 import os
 from abc import abstractmethod
+from .util.safe_input import safe_input
+from src.system.security.validation import is_integer
 
 
 class Menu:  # abstract class
@@ -21,7 +23,7 @@ class Menu:  # abstract class
 
     def _back(self):
         """ Usually ran after a certain task is completed, takes the user back a step"""
-        input("\nPress Enter to go back to the Main Menu.")
+        safe_input("\nPress Enter to go back to the Main Menu.")
         self.run()
 
     def _add_label(self, display):
@@ -37,17 +39,17 @@ class Menu:  # abstract class
     def _read_input(self):
         """ Reads input and executes a function that corresponds to that specified input """
         try:
-            key = int(input())
+            value = safe_input("", is_integer)
 
             for option in self._options:
-                if key == option[1]:
+                if int(value) == option[1]:
                     option[0]()
 
-            print("Please enter a valid option.")
+            if value:
+                print("Please enter a valid option.")
             self._read_input()
 
         except ValueError:
-            print("Please enter a valid option.")
             self._read_input()
 
     def _display_options(self):
@@ -79,7 +81,7 @@ class Menu:  # abstract class
         print("First, enter each field you want to search by separated by commas.")
 
         while True:
-            fields_input = input()
+            fields_input = safe_input()
             search_fields = set(fields_input.split(', '))
 
             # Checks whether the user entered any fields that do not exist
@@ -92,7 +94,7 @@ class Menu:  # abstract class
 
         parameters = []
         for parameter in search_fields:
-            parameter = input(f"Enter search parameter for '{parameter}': ")  # TODO VALIDATION
+            parameter = safe_input(f"Enter search parameter for '{parameter}': ")
             parameters.append(parameter)
 
         return dict(zip(search_fields, parameters))

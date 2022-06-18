@@ -1,6 +1,8 @@
 from .system_admin_menu import SystemAdminMenu
 import src.system.roles.super_admin_service as super_admin_service
-from .util.form import Prompt, Form
+from .util.form import prompt_input
+from .util.safe_input import safe_input
+from src.system.security.validation import *
 
 
 class SuperAdminMenu(SystemAdminMenu):
@@ -18,16 +20,10 @@ class SuperAdminMenu(SystemAdminMenu):
         self._read_input()
 
     def add_admin(self):
-        username = Prompt("username")  # TODO INPUT VALIDATION
-        password = Prompt("password")  # TODO INPUT VALIDATION
+        username = prompt_input(lambda: safe_input("Please enter Username", is_not_empty_or_whitespace))
+        password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
-        form = Form()
-        form.add_prompt(username)
-        form.add_prompt(password)
-
-        form.prompt_form()
-
-        result = super_admin_service.add_admin(username.get_value(), password.get_value())
+        result = super_admin_service.add_admin(username, password)
         print(result[1])
 
         self._back()
@@ -36,7 +32,7 @@ class SuperAdminMenu(SystemAdminMenu):
         pass
 
     def delete_admin(self):
-        admin_id = Prompt("admin_id")  # TODO INPUT VALIDATION
+        admin_id = prompt_input(lambda: safe_input("Please enter Admin ID", is_integer))
 
         form = Form()
         form.add_prompt(admin_id)
