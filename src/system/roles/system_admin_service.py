@@ -1,15 +1,22 @@
 from src.system.context import Context
 import src.system.backup.backup as backup
 from src.system.logging.logger import log
+from sqlite3 import IntegrityError
 
 
-def add_advisor(advisor_id, advisor_username, advisor_pass):
+def add_advisor(advisor_username, advisor_pass):
     con = Context.db_connection
     c = con.cursor()
-    c.execute("INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, 3)",
-              (advisor_id, advisor_username, advisor_pass))
-    con.commit()
-    print("Advisor Added")
+
+    try:
+        c.execute("INSERT INTO users (id, username, password, role_id) VALUES (NULL, ?, ?, 3)",
+                  (advisor_username, advisor_pass))
+        con.commit()
+        log("Advisor Added",
+            f"Advisor named '{advisor_username}' has been added to the system")
+        return True, f"Advisor named '{advisor_username}' has been added to the system"
+    except IntegrityError:
+        return True, f"Error adding advisor. Possibly because username already exists"
 
 
 def modify_advisor():
@@ -20,8 +27,13 @@ def delete_advisor(advisor_id):
     con = Context.db_connection
     c = con.cursor()
     c.execute("DELETE FROM users WHERE id = ? AND role_id = 3", (advisor_id,))
-    con.commit()
-    print("Advisor Deleted")
+
+    if c.rowcount == 1:
+        con.commit()
+        log("Advisor Deleted", f"Advisor '#{advisor_id}' has been deleted from the system")
+        return True, f"Advisor '#{advisor_id}' has been removed"
+    else:
+        return False, f"Advisor '#{advisor_id}' does not exist"
 
 
 def reset_advisor_password(new_temp_password, advisor_id):
@@ -46,8 +58,13 @@ def delete_member(member_id):
     con = Context.db_connection
     c = con.cursor()
     c.execute("DELETE FROM members WHERE id = ?", (member_id,))
-    con.commit()
-    print("Member Deleted")
+
+    if c.rowcount == 1:
+        con.commit()
+        log("Member Deleted", f"Advisor '#{member_id}' has been deleted from the system")
+        return True, f"Member '#{member_id}' has been removed"
+    else:
+        return False, f"Member '#{member_id}' does not exist"
 
 
 def create_backup():

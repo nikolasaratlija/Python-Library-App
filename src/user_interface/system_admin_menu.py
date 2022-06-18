@@ -1,5 +1,6 @@
 from .advisor_menu import AdvisorMenu
 import src.system.roles.system_admin_service as system_admin_service
+from .util.form import Form, Prompt
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -22,13 +23,35 @@ class SystemAdminMenu(AdvisorMenu):
         self._read_input()
 
     def add_advisor(self):
-        pass
+        username = Prompt("username")  # TODO INPUT VALIDATION
+        password = Prompt("password")  # TODO INPUT VALIDATION
+
+        form = Form()
+        form.add_prompt(username)
+        form.add_prompt(password)
+
+        form.prompt_form()
+
+        result = system_admin_service.add_advisor(username.get_value(), password.get_value())
+
+        print(result[1])
+        self._back()
 
     def modify_advisor(self):
         pass
 
     def delete_advisor(self):
-        pass
+        advisor_id = Prompt("advisor_id")  # TODO INPUT VALIDATION
+
+        form = Form()
+        form.add_prompt(advisor_id)
+
+        form.prompt_form()
+
+        result = system_admin_service.delete_advisor(advisor_id.get_value())
+
+        print(result[1])
+        self._back()
 
     def reset_advisor_password(self):
         pass
@@ -39,7 +62,17 @@ class SystemAdminMenu(AdvisorMenu):
             print('{:<20s} {:<20s}'.format(f"Name: {user[0]},", f"Role: {user[1]}"))
 
     def delete_member(self):
-        pass
+        member_id = Prompt("member_id")  # TODO INPUT VALIDATION
+
+        form = Form()
+        form.add_prompt(member_id)
+
+        form.prompt_form()
+
+        result = system_admin_service.delete_member(member_id.get_value())
+
+        print(result[1])
+        self._back()
 
     def backup_restore(self):
         value = input("Are you sure you want to restore the system from backup? Type 'confirm' to confirm.\n")
