@@ -25,6 +25,6 @@ def _check_id_validity(number_list):
         return False
 
 
-def int_list_to_string(int_list):
+def _int_list_to_string(int_list):
     string_ints = [str(number) for number in int_list]
     return "".join(string_ints)
