@@ -42,7 +42,12 @@ class Menu:  # abstract class
             for option in self._options:
                 if key == option[1]:
                     option[0]()
+
+            print("Please enter a valid option.")
+            self._read_input()
+
         except ValueError:
+            print("Please enter a valid option.")
             self._read_input()
 
     def _display_options(self):

@@ -1,4 +1,5 @@
 import re
+from src.system.logging.logger import log
 
 
 class Validation:
@@ -51,7 +52,7 @@ NOT_EMPTY_OR_WHITESPACE = Validation(
 
 # check is string is under 255 characters
 def is_valid_length(string):
-    # TODO: Log suspicious activity
+    log("Input exceeded maximum length", "Input by user exceeded maximum length of 255 characters", True)
     return len(string) < 255
 
 
@@ -64,3 +65,5 @@ def match_regex(regex, string):
     pattern = re.compile(regex)
     res = re.match(pattern, string)
     return bool(res)
+
+
