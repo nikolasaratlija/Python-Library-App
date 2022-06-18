@@ -12,7 +12,7 @@ Context.db_connection = get_connection()
 # menu = SuperAdminMenu()
 # menu.run()
 
-res = safe_input("test", not_empty)
+res = safe_input("test", is_digit)
 print(res)
 
 # if __name__ == "__main__":
