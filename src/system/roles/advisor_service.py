@@ -1,39 +1,39 @@
 from src.system.roles.member import Member
 from src.system.context import Context
 from src.system.security.user_id_generator import generate_user_id
+from src.system.logging.logger import log
+from sqlite3 import IntegrityError
 
 
-def update_own_password(user_id, new_password):
-    password_updated = False
+def update_own_password(new_password):
     con = Context.db_connection
     c = con.cursor()
 
-    c.execute("SELECT * FROM users WHERE (id = ? AND role_id = 3)", (user_id,))
-    result = c.fetchone()
+    c.execute("UPDATE users SET password = ? WHERE id = ?", (new_password, Context.user_id))
 
-    if not result:
-        c.execute("UPDATE users SET password = ? WHERE (id = ? AND role_id = 3)", (new_password, user_id))
+    if c.rowcount == 1:
         con.commit()
-        # print("Password Updated") #LOG THIS
-        password_updated = True
+        log("User updated password", f"User #{Context.user_id} update their own password")
+        return True, "Your password has been successfully updated."
     else:
-        # print("No user found to update, entered correct id?") #LOG THIS
-        password_updated = False
-
-    return password_updated
+        return False, "Something went wrong while trying to update your password."
 
 
 def add_member(member: Member):
-    # TODO: not finished
+    # TODO: add fields
     con = Context.db_connection
     c = con.cursor()
 
     user_id = generate_user_id()
 
-    c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?)",
-              (user_id, member.first_name, member.last_name))
-    con.commit()
-    print("Member Added")
+    try:
+        c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?)",
+                  (user_id, member.first_name, member.last_name))
+        con.commit()
+        log("Member Added", f"Member '#{user_id} has been added to the system'")
+        return True, "Member Added", f"Member '#{user_id} has been added to the system'"
+    except IntegrityError:
+        return False, "user_id already exists."
 
 
 def modify_member():
@@ -41,12 +41,14 @@ def modify_member():
 
 
 def read_member(member_id):
+    # TODO add fields
+
     con = Context.db_connection
     c = con.cursor()
     c.execute("SELECT * FROM members WHERE id = ?", (member_id,))
     result = c.fetchone()
 
     if not result:
-        return "User cannot be found!"
+        return False, "User cannot be found"
 
-    return result
+    return True, result

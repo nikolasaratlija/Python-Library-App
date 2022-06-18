@@ -3,7 +3,7 @@ from src.user_interface.login_menu import LoginMenu
 from src.user_interface.super_admin_menu import SuperAdminMenu
 from src.system.context import Context
 
-Context.user_id = 1
+Context.user_id = 2
 Context.user_name = 'nikola'
 Context.db_connection = get_connection()
 

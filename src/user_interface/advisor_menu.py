@@ -20,6 +20,7 @@ class AdvisorMenu(Menu):
         self._read_input()
 
     def add_member(self):
+        # TODO add fields
         first_name_prompt = Prompt("First Name")
         last_name_prompt = Prompt("Last Name")
         email_prompt = Prompt("Email", EMAIL)
@@ -39,21 +40,28 @@ class AdvisorMenu(Menu):
         self._back()
 
     def find_member(self):
-        pass
+        # TODO add fields
+        member_id = Prompt("member id")
+
+        form = Form()
+        form.add_prompt(member_id)
+
+        form.prompt_form()
+
+        result = advisor_service.read_member(member_id.get_value())
+        print(result[1])
+        self._back()
 
     def modify_member(self):
         pass
 
     def update_own_password(self):
-        user_id_prompt = Prompt("User id")
-        new_pass_prompt = Prompt("New password")
+        new_pass_prompt = Prompt("password")  # TODO VALIDATION
         form = Form()
-        form.add_prompt(user_id_prompt)
         form.add_prompt(new_pass_prompt)
         form.prompt_form()
 
-        result = advisor_service.update_own_password(user_id_prompt.get_value(),new_pass_prompt.get_value())
-        if result:
-            print("Updated Password")
-        else:
-            print("No advisor found to update, entered correct id?")
+        result = advisor_service.update_own_password(new_pass_prompt.get_value())
+        print(result[1])
+
+        self._back()
