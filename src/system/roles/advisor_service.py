@@ -4,6 +4,8 @@ from src.system.security.user_id_generator import generate_user_id
 from src.system.logging.logger import log
 from sqlite3 import IntegrityError
 
+from src.system.util.query_builder import base_query_builder
+
 
 def update_own_password(new_password):
     con = Context.db_connection
@@ -71,14 +73,4 @@ def _read_member_query_builder(search_parameters):
     sql = "SELECT m.id, first_name, last_name, email, phone, street_name, house_number, zip_code, c.city_name " \
           "FROM members m JOIN cities c on m.city_id = c.id"
 
-    conditions = []
-    params = {}
-
-    for key, value in search_parameters.items():
-        if key in search_conditions:
-            conditions.append(search_conditions[key])
-            params[key] = '%' + search_parameters[key] + '%'
-
-    where_statement = ' AND '.join(conditions)
-    sql += " WHERE " + where_statement
-    return sql, params
+    return base_query_builder(sql, search_parameters, search_conditions)

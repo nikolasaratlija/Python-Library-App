@@ -3,6 +3,8 @@ import src.system.backup.backup as backup
 from src.system.logging.logger import log
 from sqlite3 import IntegrityError
 
+from src.system.util.query_builder import base_query_builder
+
 
 def add_advisor(advisor_username, advisor_pass):
     con = Context.db_connection
@@ -98,14 +100,4 @@ def _read_users_query_builder(search_parameters):
           "FROM users u " \
           "JOIN roles r on u.role_id = r.id"
 
-    conditions = []
-    params = {}
-
-    for key, value in search_parameters.items():
-        if key in search_conditions:
-            conditions.append(search_conditions[key])
-            params[key] = '%' + search_parameters[key] + '%'
-
-    where_statement = ' AND '.join(conditions)
-    sql += " WHERE " + where_statement
-    return sql, params
+    return base_query_builder(sql, search_parameters, search_conditions)
