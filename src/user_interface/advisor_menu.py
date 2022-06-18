@@ -40,15 +40,12 @@ class AdvisorMenu(Menu):
         self._back()
 
     def find_member(self):
-        # TODO add fields
-        member_id = Prompt("member id")
+        fields = \
+            {'id', 'first_name', 'last_name', 'email', 'phone', 'street_name', 'house_number', 'zip_code', 'city_name'}
 
-        form = Form()
-        form.add_prompt(member_id)
+        search_parameters = self._multiple_fields_input(fields)
+        result = advisor_service.read_member(search_parameters)
 
-        form.prompt_form()
-
-        result = advisor_service.read_member(member_id.get_value())
         print(result[1])
         self._back()
 

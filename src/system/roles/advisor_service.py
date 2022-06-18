@@ -40,15 +40,44 @@ def modify_member():
     pass
 
 
-def read_member(member_id):
-    # TODO add fields
-
+def read_member(search_parameters):
     con = Context.db_connection
     c = con.cursor()
-    c.execute("SELECT * FROM members WHERE id = ?", (member_id,))
+    sql, params = _read_member_query_builder(search_parameters)
+
+    c.execute(sql, params)
     result = c.fetchone()
 
     if not result:
         return False, "User cannot be found"
 
     return True, result
+
+
+def _read_member_query_builder(search_parameters):
+    search_conditions = {
+        'id': 'm.id LIKE :id',
+        'first_name': 'first_name LIKE :first_name',
+        'last_name': 'last_name LIKE :last_name',
+        'email': 'email LIKE :email',
+        'phone': 'phone LIKE :phone',
+        'street_name': 'street_name LIKE :street_name',
+        'house_number': 'house_number LIKE :house_number',
+        'zip_code': 'zip_code LIKE :zip_code',
+        'city_name': 'c.city_name LIKE :city_name',
+    }
+
+    sql = "SELECT m.id, first_name, last_name, email, phone, street_name, house_number, zip_code, c.city_name " \
+          "FROM members m JOIN cities c on m.city_id = c.id"
+
+    conditions = []
+    params = {}
+
+    for key, value in search_parameters.items():
+        if key in search_conditions:
+            conditions.append(search_conditions[key])
+            params[key] = '%' + search_parameters[key] + '%'
+
+    where_statement = ' AND '.join(conditions)
+    sql += " WHERE " + where_statement
+    return sql, params

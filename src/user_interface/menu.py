@@ -67,3 +67,27 @@ class Menu:  # abstract class
 
             if user_input != "":
                 return user_input
+
+    @staticmethod
+    def _multiple_fields_input(fields):
+        print(f"You may search by the following fields: {', '.join(fields)}")
+        print("First, enter each field you want to search by separated by commas.")
+
+        while True:
+            fields_input = input()
+            search_fields = set(fields_input.split(', '))
+
+            # Checks whether the user entered any fields that do not exist
+            if not search_fields.issubset(fields):
+                incorrect_fields = search_fields.difference(fields)
+                print(f"The following field(s) are not valid: '{', '.join(incorrect_fields)}'. Please try again.")
+                continue
+            else:
+                break
+
+        parameters = []
+        for parameter in search_fields:
+            parameter = input(f"Enter search parameter for '{parameter}': ")  # TODO VALIDATION
+            parameters.append(parameter)
+
+        return dict(zip(search_fields, parameters))
