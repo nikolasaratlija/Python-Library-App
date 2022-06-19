@@ -77,6 +77,7 @@ def delete_member(member_id):
         log("Member Deleted", f"Advisor '#{member_id}' has been deleted from the system")
         return True, f"Member '#{member_id}' has been removed"
     else:
+        log("Member Not Deleted", f"Member '#{member_id}' does not exist")
         return False, f"Member '#{member_id}' does not exist"
 
 
