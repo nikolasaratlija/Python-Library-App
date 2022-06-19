@@ -18,8 +18,7 @@ class LoginMenu(Menu):
             if data[0] == SUCCESSFUL_LOGIN:
                 break
             elif data[0] == LOGIN_ATTEMPTS_EXCEEDED:
-                exit("Too many login attempts. Action logged.")
-                break
+                return exit("Too many login attempts. Action logged.")
             else:
                 print("Incorrect username or password, please try again:")
                 login_attempt += 1
