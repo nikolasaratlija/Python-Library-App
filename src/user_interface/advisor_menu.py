@@ -21,13 +21,25 @@ class AdvisorMenu(Menu):
         self._read_input()
 
     def add_member(self):
-        # TODO add fields
-        first_name = prompt_input(lambda: safe_input("Please enter First Name", not_empty))
-        last_name = prompt_input(lambda: safe_input("Please enter Last Name", not_empty))
-        # email_prompt = prompt_input(lambda: safe_input("Please enter First Name", is_email))
-        # zip_code_prompt = prompt_input(lambda: safe_input("Please enter Zip Code", is_zipcode))
+        first_name = prompt_input(lambda: safe_input("Please enter First Name"))
+        last_name = prompt_input(lambda: safe_input("Please enter Last Name"))
+        email = prompt_input(lambda: safe_input("Please enter Email", is_email))
+        zip_code = prompt_input(lambda: safe_input("Please enter Zip Code", is_zipcode))
+        phone = prompt_input(lambda: safe_input("Please enter Phone Number", is_phone_number))
 
-        advisor_service.add_member(Member(first_name, last_name))
+        city_options = advisor_service.get_cities()  # gets all cities
+        # displays list of cities and prompts user to pick one
+        city = single_choice(lambda: safe_input("Please enter a city name: "), city_options)
+
+        advisor_service.add_member(
+            Member(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                zip_code=zip_code,
+                phone=phone,
+                city_id=city[0]  # id of city
+            ))
 
         self._back()
 

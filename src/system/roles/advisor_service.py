@@ -22,18 +22,21 @@ def update_own_password(new_password):
 
 
 def add_member(member: Member):
-    # TODO: add fields
     con = Context.db_connection
     c = con.cursor()
 
     user_id = generate_user_id()
 
     try:
-        c.execute("INSERT INTO members (id, first_name, last_name) VALUES (?, ?, ?)",
-                  (user_id, member.first_name, member.last_name))
+        c.execute(
+            "INSERT INTO members (id, first_name, last_name, email, phone, city_id, zip_code) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (user_id, member.first_name, member.last_name, member.email, member.phone, member.city_id, member.zip_code))
         con.commit()
+
         log("Member Added", f"Member '#{user_id} has been added to the system'")
         return True, "Member Added", f"Member '#{user_id} has been added to the system'"
+
     except IntegrityError:
         return False, "user_id already exists."
 
@@ -74,3 +77,10 @@ def _read_member_query_builder(search_parameters):
           "FROM members m JOIN cities c on m.city_id = c.id"
 
     return base_query_builder(sql, search_parameters, search_conditions)
+
+
+def get_cities():
+    con = Context.db_connection
+    c = con.cursor()
+    c.execute("SELECT * FROM cities")
+    return c.fetchall()

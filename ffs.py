@@ -5,11 +5,11 @@ from src.system.context import Context
 from src.user_interface.util.safe_input import safe_input
 from src.system.security.validation import *
 
-if __name__ == "__main__":
-    Context.db_connection = get_connection()
-    login = LoginMenu()
-    login.run()
 
+# if __name__ == "__main__":
+#     Context.db_connection = get_connection()
+#     login = LoginMenu()
+#     login.run()
 
 def test_run():
     Context.user_id = 2
@@ -18,3 +18,6 @@ def test_run():
 
     menu = SuperAdminMenu()
     menu.run()
+
+
+test_run()
