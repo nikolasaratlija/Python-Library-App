@@ -2,3 +2,5 @@
 __pycache__/
 
 ffs.py
+src/system/backup/backup.zip
+src/system/logging/log.log

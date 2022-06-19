@@ -32,7 +32,8 @@ def add_member(member: Member):
         c.execute(
             "INSERT INTO members (id, first_name, last_name, email, phone, city_id, zip_code) "
             "VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (user_id, member.first_name, member.last_name, member.email, member.phone, member.city_id, member.zip_code))
+            (user_id, member.first_name, member.last_name, member.email, "+31-6-" + member.phone, member.city_id,
+             member.zip_code))
         con.commit()
 
         log("Member Added", f"Member '#{user_id} has been added to the system'")
@@ -59,7 +60,7 @@ def modify_member(member_id, first_name, last_name, email, phone, street_name, h
             "       zip_code = ?,"
             "       city_id = ? "
             "WHERE id = ?"
-            , (first_name, last_name, email, phone, street_name, house_number, zip_code, city_id, member_id))
+            , (first_name, last_name, email, "+31-6" + phone, street_name, house_number, zip_code, city_id, member_id))
 
         if c.rowcount == 1:
             con.commit()
