@@ -78,7 +78,7 @@ class Menu:  # abstract class
     @staticmethod
     def _multiple_fields_input(fields):
         print(f"You may search by the following fields: {', '.join(fields)}")
-        print("First, enter each field you want to search by separated by commas.")
+        print("First, enter each field you want to search by separated by a comma and a space ', '.")
 
         while True:
             fields_input = safe_input()

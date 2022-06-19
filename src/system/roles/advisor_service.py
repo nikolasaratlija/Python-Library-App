@@ -80,7 +80,7 @@ def read_member(search_parameters):
     sql, params = _read_member_query_builder(search_parameters)
 
     c.execute(sql, params)
-    result = c.fetchone()
+    result = c.fetchall()
 
     if not result:
         log("Read Member", f"User cannot be found in database")
@@ -91,7 +91,6 @@ def read_member(search_parameters):
 
 
 def _read_member_query_builder(search_parameters):
-    # TODO TRY CATCH
     search_conditions = {
         'id': 'm.id LIKE :id',
         'first_name': 'first_name LIKE :first_name',
