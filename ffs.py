@@ -5,18 +5,16 @@ from src.system.context import Context
 from src.user_interface.util.safe_input import safe_input
 from src.system.security.validation import *
 
-Context.user_id = 2
-Context.user_name = 'nikola'
-Context.db_connection = get_connection()
+if __name__ == "__main__":
+    Context.db_connection = get_connection()
+    login = LoginMenu()
+    login.run()
 
-# menu = SuperAdminMenu()
-# menu.run()
 
-res = safe_input("test", is_digit)
-print(res)
+def test_run():
+    Context.user_id = 2
+    Context.user_name = 'nikola'
+    Context.db_connection = get_connection()
 
-# if __name__ == "__main__":
-#     Context.db_connection = get_connection()
-#     login = LoginMenu()
-#     login.run()
-
+    menu = SuperAdminMenu()
+    menu.run()

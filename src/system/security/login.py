@@ -6,12 +6,30 @@ from src.user_interface.super_admin_menu import SuperAdminMenu
 from src.user_interface.system_admin_menu import SystemAdminMenu
 from src.system.logging.logger import log
 
+LOGIN_MAX_ATTEMPTS = 3
 
-def try_login_user(username, password):
+# kind of like an enum
+INCORRECT_LOGIN = 'UNSUCCESSFUL_LOGIN'
+SUCCESSFUL_LOGIN = 'SUCCESSFUL_LOGIN'
+LOGIN_ATTEMPTS_EXCEEDED = 'LOGIN_ATTEMPTS_EXCEEDED'
+
+
+def try_login_user(username, password, attempt):
     con = Context.db_connection
     c = con.cursor()
     c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    return c.fetchone()
+
+    login_result = c.fetchone()
+
+    if not login_result and attempt > 2:
+        log("Login attempts exceeded", f"Successful login using 'Username: {username}, 'Password: {password}'", True)
+        return LOGIN_ATTEMPTS_EXCEEDED, None
+    elif login_result:
+        log("Successful Login", f"Successful login using \"Username: '{username}', Password: '{password}'\"")
+        return SUCCESSFUL_LOGIN, login_result
+    else:
+        log("Unsuccessful Login", f"Unsuccessful login using 'Username: {username}, 'Password: {password}'")
+        return INCORRECT_LOGIN, None
 
 
 def login(user_id, name, role_id):

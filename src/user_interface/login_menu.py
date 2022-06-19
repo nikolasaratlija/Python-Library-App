@@ -1,29 +1,28 @@
 from .menu import Menu
-from src.system.security.login import login, try_login_user
-from src.user_interface.util.form import *
+from src.system.security.login import login, try_login_user, SUCCESSFUL_LOGIN, INCORRECT_LOGIN, LOGIN_ATTEMPTS_EXCEEDED
+from .util.form import prompt_input
+from .util.safe_input import safe_input
 
 
 class LoginMenu(Menu):
     def run(self):
         self._title(f"Welcome user, this is the Furnicor Family System")
-        username_prompt = Prompt("Username")
-        password_prompt = Prompt("Password")
-
-        login_form = Form()
-        login_form.add_prompt(username_prompt)
-        login_form.add_prompt(password_prompt)
+        login_attempt = 1
 
         while True:
-            login_form.prompt_form()
+            username = prompt_input(lambda: safe_input("Please input your Username:"))
+            password = prompt_input(lambda: safe_input("Please input your Password:"))
 
-            data = try_login_user(
-                username_prompt.get_value(),
-                password_prompt.get_value())
+            data = try_login_user(username, password, login_attempt)
 
-            if not data:
-                print("Incorrect username or password, please try again:")
-                continue
-            else:
+            if data[0] == SUCCESSFUL_LOGIN:
                 break
+            elif data[0] == LOGIN_ATTEMPTS_EXCEEDED:
+                exit("Too many login attempts. Action logged.")
+                break
+            else:
+                print("Incorrect username or password, please try again:")
+                login_attempt += 1
+                continue
 
-        login(data[0], data[1], data[3])
+        login(data[1][0], data[1][1], data[1][3])

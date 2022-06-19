@@ -40,7 +40,6 @@ not_empty = Validator(
 
 # check is string is under 255 characters
 def is_valid_length(string):
-    log("Input exceeded maximum length", "Input by user exceeded maximum length of 255 characters", True)
     return len(string) < 255
 
 
