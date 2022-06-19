@@ -3,4 +3,9 @@ __pycache__/
 
 ffs.py
 src/system/backup/backup.zip
+
+src/database/database.db
+src/database/ENCRYPTED-database.db
+
 src/system/logging/log.log
+src/system/logging/ENCRYPTED-log.log
