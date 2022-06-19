@@ -60,7 +60,7 @@ def read_all_users(search_parameters=None):
 def delete_member(member_id):
     con = Context.db_connection
     c = con.cursor()
-    c.execute("DELETE FROM members WHERE id = ?", (member_id,))
+    c.execute("DELETE FROM members WHERE id = ? AND role_id = 2", (member_id,))
 
     if c.rowcount == 1:
         con.commit()

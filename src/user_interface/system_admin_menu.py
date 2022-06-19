@@ -37,18 +37,12 @@ class SystemAdminMenu(AdvisorMenu):
         pass
 
     def delete_advisor(self):
-        # advisor_id = Prompt("advisor_id")  # TODO INPUT VALIDATION
-        #
-        # form = Form()
-        # form.add_prompt(advisor_id)
-        #
-        # form.prompt_form()
-        #
-        # result = system_admin_service.delete_advisor(advisor_id.get_value())
-        #
-        # print(result[1])
-        # self._back()
-        pass
+        advisor_id = prompt_input(lambda: safe_input("Please enter Member id", is_digit))
+
+        result = system_admin_service.delete_advisor(advisor_id)
+
+        print(result[1])
+        self._back()
 
     def reset_advisor_password(self):
         pass
@@ -59,7 +53,7 @@ class SystemAdminMenu(AdvisorMenu):
             print('{:<20s} {:<20s}'.format(f"Name: {user[0]},", f"Role: {user[1]}"))
 
     def delete_member(self):
-        member_id = prompt_input(lambda: safe_input("Please enter Password", is_digit))
+        member_id = prompt_input(lambda: safe_input("Please enter Member id", is_digit))
 
         result = system_admin_service.delete_member(member_id)
 

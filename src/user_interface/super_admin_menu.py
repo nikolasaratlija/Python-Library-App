@@ -34,15 +34,9 @@ class SuperAdminMenu(SystemAdminMenu):
     def delete_admin(self):
         admin_id = prompt_input(lambda: safe_input("Please enter Admin ID", is_digit))
 
-        form = Form()
-        form.add_prompt(admin_id)
-
-        form.prompt_form()
-
-        result = super_admin_service.delete_admin(admin_id.get_value())
+        result = super_admin_service.delete_admin(admin_id)
 
         print(result[1])
-
         self._back()
 
     def reset_admin_password(self):
