@@ -85,26 +85,13 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def backup_restore(self):
-        value = input("Are you sure you want to restore the system from backup? Type 'confirm' to confirm.\n")
-
-        if value == 'confirm':
-            result = system_admin_service.restore_backup()
-            print(result[1])
-        else:
-            print("System restore cancelled by user")
-
+        result = system_admin_service.restore_backup()
+        print(result[1])
         self._back()
 
     def backup_create(self):
-        value = safe_input("Are you sure you want to create a backup? Type 'confirm' to confirm.\n",
-                           not_empty)
-
-        if value == 'confirm':
-            result = system_admin_service.create_backup()
-            print(result[1])
-        else:
-            print("System backup has been cancelled by user.")
-
+        result = system_admin_service.create_backup()
+        print(result[1])
         self._back()
 
     def read_logs(self):

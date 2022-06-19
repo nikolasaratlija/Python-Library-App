@@ -6,8 +6,8 @@ from src.system.logging.logger import log
 def create_backup():
     try:
         with ZipFile('src/system/backup/backup.zip', 'w') as backup_zip:
-            backup_zip.write('src/database/database.db')
-            backup_zip.write('src/system/logging/log.log')
+            backup_zip.write('src/database/ENCRYPTED-database.db')
+            backup_zip.write('src/system/logging/ENCRYPTED-log.log')
             log('Restored from backup', 'System has been successfully restored from backup.')
             return True, 'Backup has successfully been created'
     except FileNotFoundError:
