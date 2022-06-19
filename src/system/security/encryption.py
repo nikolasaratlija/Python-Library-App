@@ -2,21 +2,21 @@
 
 _KEY = 5  # 'secret' key for the caesar cypher
 
-_DATABASE_FILE = 'src/database/database.db'
-_DATABASE_FILE_ENCRYPTED = 'src/database/ENCRYPTED-database.db'
+DATABASE_FILE = 'src/database/database.db'
+DATABASE_FILE_ENCRYPTED = 'src/database/ENCRYPTED-database.db'
 
-_LOG_FILE = 'src/system/logging/log.log'
-_LOG_FILE_ENCRYPTED = 'src/system/logging/ENCRYPTED-log.log'
+LOG_FILE = 'src/system/logging/log.log'
+LOG_FILE_ENCRYPTED = 'src/system/logging/ENCRYPTED-log.log'
 
 
 def decrypt_all_files():
-    _shift_file(_LOG_FILE_ENCRYPTED, _LOG_FILE)  # decrypt log
-    _shift_file(_DATABASE_FILE_ENCRYPTED, _DATABASE_FILE)  # decrypt database
+    _shift_file(LOG_FILE_ENCRYPTED, LOG_FILE)  # decrypt log
+    _shift_file(DATABASE_FILE_ENCRYPTED, DATABASE_FILE)  # decrypt database
 
 
 def encrypt_all_files():
-    _shift_file(_LOG_FILE, _LOG_FILE_ENCRYPTED)  # encrypt log file
-    _shift_file(_DATABASE_FILE, _DATABASE_FILE_ENCRYPTED)  # encrypt database
+    _shift_file(LOG_FILE, LOG_FILE_ENCRYPTED)  # encrypt log file
+    _shift_file(DATABASE_FILE, DATABASE_FILE_ENCRYPTED)  # encrypt database
 
 
 def _shift_file(file, new_file_name):

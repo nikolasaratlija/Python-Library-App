@@ -6,12 +6,14 @@ from .util.safe_input import safe_input
 from src.system.security.validation import *
 from src.system.repository.cities import get_cities
 from src.system.repository.members import get_member
+from ..system.security.close_application import close_application
 
 
 class AdvisorMenu(Menu):
     def __init__(self):
         super().__init__()
         self._add_label("Advisor Options")
+        self._add_menu_option(self.close_application, "Close Application")
         self._add_menu_option(self.add_member, "Add New Member")
         self._add_menu_option(self.find_member, "Find Member")
         self._add_menu_option(self.modify_member, "Modify Existing Member")
@@ -21,6 +23,10 @@ class AdvisorMenu(Menu):
         self._title(f"Advisor Menu")
         self._display_options()
         self._read_input()
+
+    def close_application(self):
+        close_application()
+        exit("Gracefully exited the application")
 
     def add_member(self):
         first_name = prompt_input(lambda: safe_input("Please enter First Name"))
