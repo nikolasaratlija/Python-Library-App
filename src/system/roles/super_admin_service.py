@@ -2,6 +2,8 @@ from src.system.context import Context
 from src.system.logging.logger import log
 from sqlite3 import IntegrityError
 
+from src.system.repository.users import update_user
+
 
 def add_admin(system_admin_name, system_admin_pass):
     con = Context.db_connection
@@ -22,8 +24,8 @@ def add_admin(system_admin_name, system_admin_pass):
         return False, f"System admin with name: '{system_admin_name}' already exists. Please try another name."
 
 
-def modify_admin():
-    pass
+def update_admin(user_id, username, password, role_id):
+    return update_user(user_id, username, password, role_id)
 
 
 def delete_admin(admin_id):

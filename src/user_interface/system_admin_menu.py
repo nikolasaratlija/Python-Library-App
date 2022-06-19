@@ -3,7 +3,7 @@ import src.system.roles.system_admin_service as system_admin_service
 from .util.form import prompt_input
 from .util.safe_input import safe_input
 from src.system.security.validation import *
-from ..system.repository.advisors import get_advisor
+from ..system.repository.users import get_advisor
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -11,7 +11,7 @@ class SystemAdminMenu(AdvisorMenu):
         super().__init__()
         self._add_label("System Admin Options")
         self._add_menu_option(self.add_advisor, "Add New Advisor")
-        self._add_menu_option(self.modify_advisor, "Modify Existing Advisor")
+        self._add_menu_option(self.update_advisor, "Modify Existing Advisor")
         self._add_menu_option(self.delete_advisor, "Delete Advisor")
         self._add_menu_option(self.reset_advisor_password, "Reset Advisor Password")
         self._add_menu_option(self.read_all_users, "List All Users")
@@ -34,7 +34,7 @@ class SystemAdminMenu(AdvisorMenu):
         print(result[1])
         self._back()
 
-    def modify_advisor(self):
+    def update_advisor(self):
         advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"))
         advisor = get_advisor(advisor_id)
 
@@ -46,7 +46,7 @@ class SystemAdminMenu(AdvisorMenu):
         password = prompt_input(lambda: safe_input("Please enter Last Name", default_output=advisor['password']))
         # TODO ROLE
 
-        result = system_admin_service.modify_advisor(advisor_id, username, password, 3)
+        result = system_admin_service.update_advisor(advisor_id, username, password, 3)
 
         print(result[1])
         self._back()

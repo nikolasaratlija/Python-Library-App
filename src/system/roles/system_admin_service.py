@@ -3,6 +3,7 @@ import src.system.backup.backup as backup
 from src.system.logging.logger import log
 from sqlite3 import IntegrityError
 
+from src.system.repository.users import update_user
 from src.system.util.query_builder import base_query_builder
 
 
@@ -23,27 +24,8 @@ def add_advisor(advisor_username, advisor_pass):
         return True, f"Error adding advisor. Possibly because username already exists"
 
 
-def modify_advisor(advisor_id, username, password, role_id):
-    con = Context.db_connection
-    c = con.cursor()
-
-    try:
-        c.execute(
-            "UPDATE users "
-            "SET    username = ?,"
-            "       password = ?,"
-            "       role_id = ? "
-            "WHERE id = ? and role_id = 3"
-            , (username, password, role_id, advisor_id))
-
-        if c.rowcount == 1:
-            con.commit()
-            return True, "Advisor Updated."
-        else:
-            return False, "Error: Could not update advisor."
-
-    except IntegrityError:
-        return False, "Some constraint failed"
+def update_advisor(user_id, username, password, role_id):
+    return update_user(user_id, username, password, role_id)
 
 
 def delete_advisor(advisor_id):
@@ -72,7 +54,6 @@ def reset_advisor_password(new_temp_password, advisor_id):
     else:
         log("Reset Password", f"Advisor '#{advisor_id}' does not exist")
         return False, f"Advisor '#{advisor_id}' does not exist"
-
 
 
 def read_all_users(search_parameters=None):
