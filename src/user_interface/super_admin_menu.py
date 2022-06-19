@@ -38,7 +38,7 @@ class SuperAdminMenu(SystemAdminMenu):
             return self._back()
 
         username = prompt_input(lambda: safe_input("Please enter First Name", default_output=admin['username']))
-        password = prompt_input(lambda: safe_input("Please enter Last Name", default_output=admin['password']))
+        password = prompt_input(lambda: safe_input("Please enter Password", default_output=admin['password']))
         # TODO ROLE
 
         result = super_admin_service.update_admin(admin_id, username, password, 2)
