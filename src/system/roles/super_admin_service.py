@@ -6,12 +6,13 @@ from src.system.repository.users import update_user
 
 
 def add_admin(system_admin_name, system_admin_pass):
+    system_admin_name = system_admin_name.lower()
     con = Context.db_connection
     c = con.cursor()
 
     try:
         c.execute("INSERT INTO users (id, username, password, role_id) VALUES (NULL, ?, ?, 2)",
-                  (system_admin_name, system_admin_pass))
+                  (system_admin_name.lower(), system_admin_pass))
 
         con.commit()
         log("System Admin Added",

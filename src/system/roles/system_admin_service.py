@@ -8,6 +8,7 @@ from src.system.util.query_builder import base_query_builder
 
 
 def add_advisor(advisor_username, advisor_pass):
+    advisor_username = advisor_username.lower()
     con = Context.db_connection
     c = con.cursor()
 
