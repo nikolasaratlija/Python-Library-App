@@ -26,7 +26,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._read_input()
 
     def add_advisor(self):
-        username = prompt_input(lambda: safe_input("Please enter Username", not_empty))
+        username = prompt_input(lambda: safe_input("Please enter Username", is_username))
         password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
         result = system_admin_service.add_advisor(username, password)
@@ -35,16 +35,17 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def update_advisor(self):
-        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"))
+        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id", is_digit))
         advisor = get_advisor(advisor_id)
 
         if not advisor:
             print("Advisor with this id does not exist.")
             return self._back()
 
-        username = prompt_input(lambda: safe_input("Please enter First Name", default_output=advisor['username']))
-        password = prompt_input(lambda: safe_input("Please enter Password", default_output=advisor['password']))
-        # TODO ROLE
+        username = prompt_input(
+            lambda: safe_input("Please enter First Name", is_username, default_output=advisor['username']))
+        password = prompt_input(
+            lambda: safe_input("Please enter Password", is_password, default_output=advisor['password']))
 
         result = system_admin_service.update_advisor(advisor_id, username, password, 3)
 
@@ -60,7 +61,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def reset_advisor_password(self):
-        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"))
+        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"), is_digit)
         advisor = get_advisor(advisor_id)
 
         if not advisor:

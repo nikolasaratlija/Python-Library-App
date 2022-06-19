@@ -21,7 +21,7 @@ class SuperAdminMenu(SystemAdminMenu):
         self._read_input()
 
     def add_admin(self):
-        username = prompt_input(lambda: safe_input("Please enter Username", not_empty))
+        username = prompt_input(lambda: safe_input("Please enter Username", is_username))
         password = prompt_input(lambda: safe_input("Please enter Password", is_password))
 
         result = super_admin_service.add_admin(username, password)
@@ -30,16 +30,17 @@ class SuperAdminMenu(SystemAdminMenu):
         self._back()
 
     def update_admin(self):
-        admin_id = prompt_input(lambda: safe_input("Please enter a Admin id"))
+        admin_id = prompt_input(lambda: safe_input("Please enter a Admin id", is_digit))
         admin = get_admin(admin_id)
 
         if not admin:
             print("Admin with this id does not exist.")
             return self._back()
 
-        username = prompt_input(lambda: safe_input("Please enter First Name", default_output=admin['username']))
-        password = prompt_input(lambda: safe_input("Please enter Password", default_output=admin['password']))
-        # TODO ROLE
+        username = prompt_input(
+            lambda: safe_input("Please enter First Name", is_username, default_output=admin['username']))
+        password = prompt_input(
+            lambda: safe_input("Please enter Password", is_password, default_output=admin['password']))
 
         result = super_admin_service.update_admin(admin_id, username, password, 2)
 
@@ -55,7 +56,7 @@ class SuperAdminMenu(SystemAdminMenu):
         self._back()
 
     def reset_admin_password(self):
-        admin_id = prompt_input(lambda: safe_input("Please enter a Admin id"))
+        admin_id = prompt_input(lambda: safe_input("Please enter a Admin id", is_digit))
         admin = get_admin(admin_id)
 
         if not admin:

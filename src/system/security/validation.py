@@ -14,7 +14,8 @@ is_digit = Validator(
 
 is_username = Validator(
     lambda string: match_regex("^[a-zA-Z][a-zA-Z0-9_'.]{5,10}$", string),
-    "Error: Incorrect username format. username must be between 6 and 10 characters.")
+    "Error: Incorrect username format. Username must be between 6 and 10 characters and "
+    "can contain letters (a-z), numbers (0-9), underscores (_), apostrophes ('), and periods (.).")
 
 is_password = Validator(
     lambda string: match_regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,18}$", string),

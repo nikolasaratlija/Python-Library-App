@@ -45,5 +45,6 @@ def _shutdown_database():
         log("Shutdown: Delete Database", "Closing Application: Removing unencrypted database")
         os.remove(encryption.DATABASE_FILE)
     except OSError as e:
-        print(e)
-        log("Shutdown: Delete Log ERROR", "Cannot remove database file")
+        print("Cannot remove database file, possibly because the file is in use. "
+              "Commonly caused because you have the file open in a database viewer")
+        log("Shutdown: Delete Log ERROR", "Cannot remove database file. ")
