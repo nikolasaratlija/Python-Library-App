@@ -81,7 +81,7 @@ def restore_backup():
 def read_logs():
     try:
         with open('src/system/logging/log.log') as log_file:
-            log('Log file read by member', 'Log file read by member')
+            log('Log Read', 'Log file read by member')
             return log_file.read()
     except FileNotFoundError:
         log('read_logs() error', 'Log file could not be found')
@@ -89,7 +89,6 @@ def read_logs():
 
 
 def _read_users_query_builder(search_parameters):
-    # TODO TRY CATCH
     search_conditions = {
         'id': 'm.id LIKE :id',
         'username': 'username LIKE :username',
