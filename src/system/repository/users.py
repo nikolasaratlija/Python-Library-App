@@ -24,6 +24,16 @@ def get_user(user_id, role_id):
     return format_query_result(c.description, user)
 
 
+def get_all_users():
+    con = Context.db_connection
+    c = con.cursor()
+    c.execute(
+        "SELECT u.id, username, r.id "
+        "FROM users u "
+        "JOIN roles r on u.role_id = r.id")
+    return c.fetchall()
+
+
 def update_user(user_id, username, password, role_id):
     con = Context.db_connection
     c = con.cursor()

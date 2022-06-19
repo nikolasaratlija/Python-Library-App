@@ -3,7 +3,7 @@ import src.system.backup.backup as backup
 from src.system.logging.logger import log
 from sqlite3 import IntegrityError
 
-from src.system.repository.users import update_user
+from src.system.repository.users import update_user, get_all_users
 from src.system.util.query_builder import base_query_builder
 
 
@@ -56,15 +56,8 @@ def reset_advisor_password(new_temp_password, advisor_id):
         return False, f"Advisor '#{advisor_id}' does not exist"
 
 
-def read_all_users(search_parameters=None):
-    con = Context.db_connection
-    c = con.cursor()
-
-    sql, params = _read_users_query_builder(search_parameters)
-    c.execute(sql, params)
-
-    members = c.fetchall()
-    return members
+def read_all_users():
+    return get_all_users()
 
 
 def delete_member(member_id):
