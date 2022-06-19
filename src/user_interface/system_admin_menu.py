@@ -3,6 +3,7 @@ import src.system.roles.system_admin_service as system_admin_service
 from .util.form import prompt_input
 from .util.safe_input import safe_input
 from src.system.security.validation import *
+from ..system.repository.advisors import get_advisor
 
 
 class SystemAdminMenu(AdvisorMenu):
@@ -34,7 +35,21 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def modify_advisor(self):
-        pass
+        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"))
+        advisor = get_advisor(advisor_id)
+
+        if not advisor:
+            print("Advisor with this id does not exist.")
+            return self._back()
+
+        username = prompt_input(lambda: safe_input("Please enter First Name", default_output=advisor['username']))
+        password = prompt_input(lambda: safe_input("Please enter Last Name", default_output=advisor['password']))
+        # TODO ROLE
+
+        result = system_admin_service.modify_advisor(advisor_id, username, password, 3)
+
+        print(result[1])
+        self._back()
 
     def delete_advisor(self):
         advisor_id = prompt_input(lambda: safe_input("Please enter Member id", is_digit))

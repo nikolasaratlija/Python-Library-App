@@ -4,6 +4,8 @@ import src.system.roles.advisor_service as advisor_service
 from src.user_interface.util.form import *
 from .util.safe_input import safe_input
 from src.system.security.validation import *
+from src.system.repository.cities import get_cities
+from src.system.repository.members import get_member
 
 
 class AdvisorMenu(Menu):
@@ -27,7 +29,7 @@ class AdvisorMenu(Menu):
         zip_code = prompt_input(lambda: safe_input("Please enter Zip Code", is_zipcode))
         phone = prompt_input(lambda: safe_input("Please enter Phone Number", is_phone_number))
 
-        city_options = advisor_service.get_cities()  # gets all cities
+        city_options = get_cities()  # gets all cities
         # displays list of cities and prompts user to pick one
         city = single_choice(lambda: safe_input("Please enter a city name: "), city_options)
 
@@ -57,7 +59,7 @@ class AdvisorMenu(Menu):
 
     def modify_member(self):
         member_id = prompt_input(lambda: safe_input("Please enter a Member id"))
-        member = advisor_service.get_member(member_id)
+        member = get_member(member_id)
 
         if not member:
             print("Member with this id does not exist.")
@@ -74,7 +76,7 @@ class AdvisorMenu(Menu):
         phone = prompt_input(
             lambda: safe_input("Please enter Phone Number", is_phone_number, default_output=member['phone']))
 
-        city_options = advisor_service.get_cities()  # gets all cities
+        city_options = get_cities()  # gets all cities
         # displays list of cities and prompts user to pick one
         city = single_choice(lambda: safe_input("Please enter a city name: ", default_output=member['city_id']),
                              city_options)

@@ -107,29 +107,3 @@ def _read_member_query_builder(search_parameters):
           "FROM members m JOIN cities c on m.city_id = c.id"
 
     return base_query_builder(sql, search_parameters, search_conditions)
-
-
-def get_member(member_id):
-    con = Context.db_connection
-    c = con.cursor()
-    c.execute("SELECT * FROM members WHERE id = ? ", (member_id,))
-
-    member = c.fetchone()
-
-    if not member:
-        return None
-
-    names = list(map(lambda x: x[0], c.description))
-
-    results = {}
-    for index, name in enumerate(names):
-        results[name] = member[index]
-
-    return results
-
-
-def get_cities():
-    con = Context.db_connection
-    c = con.cursor()
-    c.execute("SELECT * FROM cities")
-    return c.fetchall()
