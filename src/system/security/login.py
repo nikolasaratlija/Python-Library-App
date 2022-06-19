@@ -40,10 +40,14 @@ def login(user_id, name, role_id):
     log('Login', f'User: {name}#{user_id} has logged into the system')
 
     if role_id is Roles.SUPER_ADMIN.value:
+        log("SuperAdminMenu Run", f"Super Admin Menu Run")
         SuperAdminMenu().run()
     elif role_id is Roles.SYSTEM_ADMIN.value:
+        log("SystemAdminMenu Run", f"System Admin Menu Run")
         SystemAdminMenu().run()
     elif role_id is Roles.ADVISOR.value:
+        log("Advisor Run", f"Advisor Run")
         AdvisorMenu().run()
     else:
+        log("Login Error", f"Login Error")
         raise LoginError("Error from 'def _open_menu'. Something possibly went wrong with the role_id.")
