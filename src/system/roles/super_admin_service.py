@@ -20,7 +20,7 @@ def add_admin(system_admin_name, system_admin_pass):
         return False, f"System admin with name: '{system_admin_name}' already exists. Please try another name."
 
 
-def update_admin():
+def modify_admin():
     pass
 
 

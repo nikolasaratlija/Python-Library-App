@@ -21,8 +21,27 @@ def add_advisor(advisor_username, advisor_pass):
         return True, f"Error adding advisor. Possibly because username already exists"
 
 
-def modify_advisor():
-    pass
+def modify_advisor(advisor_id, username, password, role_id):
+    con = Context.db_connection
+    c = con.cursor()
+
+    try:
+        c.execute(
+            "UPDATE users "
+            "SET    username = ?,"
+            "       password = ?,"
+            "       role_id = ? "
+            "WHERE id = ? and role_id = 3"
+            , (username, password, role_id, advisor_id))
+
+        if c.rowcount == 1:
+            con.commit()
+            return True, "Advisor Updated."
+        else:
+            return False, "Error: Could not update advisor."
+
+    except IntegrityError:
+        return False, "Some constraint failed"
 
 
 def delete_advisor(advisor_id):
