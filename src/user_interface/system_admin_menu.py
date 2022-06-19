@@ -43,7 +43,7 @@ class SystemAdminMenu(AdvisorMenu):
             return self._back()
 
         username = prompt_input(lambda: safe_input("Please enter First Name", default_output=advisor['username']))
-        password = prompt_input(lambda: safe_input("Please enter Last Name", default_output=advisor['password']))
+        password = prompt_input(lambda: safe_input("Please enter Password", default_output=advisor['password']))
         # TODO ROLE
 
         result = system_admin_service.update_advisor(advisor_id, username, password, 3)
