@@ -41,8 +41,32 @@ def add_member(member: Member):
         return False, "user_id already exists."
 
 
-def modify_member():
-    pass
+def modify_member(member_id, first_name, last_name, email, phone, street_name, house_number, zip_code, city_id):
+    con = Context.db_connection
+    c = con.cursor()
+
+    try:
+        c.execute(
+            "UPDATE members "
+            "SET    first_name = ?,"
+            "       last_name = ?,"
+            "       email = ?,"
+            "       phone = ?,"
+            "       street_name = ?,"
+            "       house_number = ?,"
+            "       zip_code = ?,"
+            "       city_id = ? "
+            "WHERE id = ?"
+            , (first_name, last_name, email, phone, street_name, house_number, zip_code, city_id, member_id))
+
+        if c.rowcount == 1:
+            con.commit()
+            return True, "Member Updated."
+        else:
+            return False, "Error: Could not update member."
+
+    except IntegrityError:
+        return False, "Some constraint failed"
 
 
 def read_member(search_parameters):
@@ -77,6 +101,25 @@ def _read_member_query_builder(search_parameters):
           "FROM members m JOIN cities c on m.city_id = c.id"
 
     return base_query_builder(sql, search_parameters, search_conditions)
+
+
+def get_member(member_id):
+    con = Context.db_connection
+    c = con.cursor()
+    c.execute("SELECT * FROM members WHERE id = ? ", (member_id,))
+
+    member = c.fetchone()
+
+    if not member:
+        return None
+
+    names = list(map(lambda x: x[0], c.description))
+
+    results = {}
+    for index, name in enumerate(names):
+        results[name] = member[index]
+
+    return results
 
 
 def get_cities():

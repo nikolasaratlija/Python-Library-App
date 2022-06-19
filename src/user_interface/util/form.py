@@ -1,9 +1,9 @@
-def prompt_input(prompter):
+def prompt_input(prompter, allow_empty=False):
     """ Keeps prompting until value is not null """
     while True:
         value = prompter()
 
-        if value:
+        if value or allow_empty:
             return value
 
 

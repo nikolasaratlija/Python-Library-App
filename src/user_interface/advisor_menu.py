@@ -56,7 +56,44 @@ class AdvisorMenu(Menu):
         self._back()
 
     def modify_member(self):
-        pass
+        member_id = prompt_input(lambda: safe_input("Please enter a Member id"))
+        member = advisor_service.get_member(member_id)
+
+        if not member:
+            print("Member with this id does not exist.")
+            return self._back()
+
+        print(f"Member '{member['first_name']} {member['last_name']}#{member_id}' found.")
+        print("To keep the attribute unchanged, simply keep the field empty and press 'Enter'")
+
+        first_name = prompt_input(lambda: safe_input("Please enter First Name", default_output=member['first_name']))
+        last_name = prompt_input(lambda: safe_input("Please enter Last Name", default_output=member['last_name']))
+        email = prompt_input(lambda: safe_input("Please enter Email", is_email, default_output=member['email']))
+        zip_code = prompt_input(
+            lambda: safe_input("Please enter Zip Code", is_zipcode, default_output=member['zip_code']))
+        phone = prompt_input(
+            lambda: safe_input("Please enter Phone Number", is_phone_number, default_output=member['phone']))
+
+        city_options = advisor_service.get_cities()  # gets all cities
+        # displays list of cities and prompts user to pick one
+        city = single_choice(lambda: safe_input("Please enter a city name: ", default_output=member['city_id']),
+                             city_options)
+
+        result = advisor_service.modify_member(
+            member_id=member_id,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            zip_code=zip_code,
+            phone=phone,
+            city_id=city[0],  # id of city
+            street_name="test",
+            house_number="test"
+        )
+
+        print(result[1])
+
+        self._back()
 
     def update_own_password(self):
         new_pass_prompt = prompt_input(lambda: safe_input("Please enter Password", is_password))
