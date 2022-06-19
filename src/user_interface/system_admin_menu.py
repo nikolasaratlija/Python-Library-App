@@ -74,7 +74,8 @@ class SystemAdminMenu(AdvisorMenu):
     def read_all_users(self):
         users = system_admin_service.read_all_users()
         for user in users:
-            print('{:<5s} {:<25s} {:<20s}'.format(f"Id: {user[0]},", f"Username: {user[1]}", f"Role: {user[2]}"))
+            print('{:<10s} {:<25s} {:<20s}'.format(f"Id: {user[0]},", f"Username: {user[1]}", f"Role: {user[2]}"))
+        self._back()
 
     def delete_member(self):
         member_id = prompt_input(lambda: safe_input("Please enter Member id", is_digit))

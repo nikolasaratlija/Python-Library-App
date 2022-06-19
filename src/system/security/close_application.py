@@ -9,11 +9,11 @@ import src.system.security.encryption as encryption
 def close_application():
     log("Closing Application", "Closing Application: Starting shutdown sequence")
 
-    _close_services()
-
     _encrypt_files()
 
-    _delete_files()
+    _shutdown_database()
+
+    _shutdown_logger()
 
 
 def _encrypt_files():
@@ -22,25 +22,23 @@ def _encrypt_files():
     encryption.encrypt_all_files()
 
 
-def _close_services():
-    # close database
-    Context.db_connection.close()
-    log("Shutdown: Database", "Closing Application: Database connection closed")
-
+def _shutdown_logger():
     # disable logger
     logging.shutdown()
     logging.getLogger().handlers.clear()
-    log("Shutdown: Log", "Closing Application: Shutting down logger component")
+    # no more actions can be logged because the logger has been disabled
 
-
-def _delete_files():
     # delete log file
     try:
-        log("Shutdown: Delete Log", "Closing Application: Removing unencrypted logger")
         os.remove(encryption.LOG_FILE)
     except OSError as e:
         print(e)
-        log("Shutdown: Log ERROR", "Cannot remove log file")
+
+
+def _shutdown_database():
+    # close database
+    Context.db_connection.close()
+    log("Shutdown: Database", "Closing Application: Database connection closed")
 
     # delete database file
     try:
