@@ -55,4 +55,13 @@ class SuperAdminMenu(SystemAdminMenu):
         self._back()
 
     def reset_admin_password(self):
-        pass
+        admin_id = prompt_input(lambda: safe_input("Please enter a Admin id"))
+        admin = get_admin(admin_id)
+
+        if not admin:
+            print("Admin with this id does not exist.")
+            return self._back()
+
+        super_admin_service.update_admin(admin_id, admin['username'], 'temp_password', admin['role_id'])
+        print(f"System Admin #{admin_id} password reseted to: temp_password")
+        self._back()

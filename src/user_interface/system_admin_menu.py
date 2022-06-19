@@ -60,7 +60,16 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def reset_advisor_password(self):
-        pass
+        advisor_id = prompt_input(lambda: safe_input("Please enter a Advisor id"))
+        advisor = get_advisor(advisor_id)
+
+        if not advisor:
+            print("Advisor with this id does not exist.")
+            return self._back()
+
+        system_admin_service.update_advisor(advisor_id, advisor['username'], 'temp_password', advisor['role_id'])
+        print(f"Advisor #{advisor_id} password reseted to: temp_password")
+        self._back()
 
     def read_all_users(self):
         users = system_admin_service.read_all_users()
