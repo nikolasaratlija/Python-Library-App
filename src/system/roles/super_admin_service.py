@@ -17,6 +17,8 @@ def add_admin(system_admin_name, system_admin_pass):
         return True, f"System admin named '{system_admin_name}' has been added to the system"
 
     except IntegrityError:
+        log("System Admin Not Added",
+            f"System admin named '{system_admin_name}' already exists, Not Added")
         return False, f"System admin with name: '{system_admin_name}' already exists. Please try another name."
 
 
@@ -34,6 +36,7 @@ def delete_admin(admin_id):
         log("Admin Deleted", f"System admin '#{admin_id}' has been deleted from the system")
         return True, f"System admin '#{admin_id}' has been removed"
     else:
+        log("Admin Not Deleted", f"System admin '#{admin_id}' does not exist")
         return False, f"System admin '#{admin_id}' does not exist"
 
 
@@ -45,7 +48,8 @@ def reset_admin_password(new_temp_password, admin_id):
 
     if c.rowcount == 1:
         con.commit()
-        log("Print Password", f"System admin '#{admin_id}' has had their password changed")
+        log("Reset Password", f"System admin '#{admin_id}' has had their password changed")
         return True, f"System admin '#{admin_id}' has had their password changed"
     else:
+        log("Reset Password", f"System admin '#{admin_id}' does not exist")
         return False, f"System admin '#{admin_id}' does not exist"

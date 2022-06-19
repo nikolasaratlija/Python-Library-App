@@ -18,6 +18,7 @@ def update_own_password(new_password):
         log("User updated password", f"User #{Context.user_id} update their own password")
         return True, "Your password has been successfully updated."
     else:
+        log("User update password went wrong", f"User #{Context.user_id} tryed update their own password")
         return False, "Something went wrong while trying to update your password."
 
 
@@ -38,6 +39,7 @@ def add_member(member: Member):
         return True, "Member Added", f"Member '#{user_id} has been added to the system'"
 
     except IntegrityError:
+        log("Member not Added", f"Member with id: {user_id} already exists")
         return False, "user_id already exists."
 
 
@@ -61,8 +63,10 @@ def modify_member(member_id, first_name, last_name, email, phone, street_name, h
 
         if c.rowcount == 1:
             con.commit()
+            log("Updated member", f"Member with member id: {member_id} is updated")
             return True, "Member Updated."
         else:
+            log("Updated member went wrong", f"Member with member id: {member_id} is not updated")
             return False, "Error: Could not update member."
 
     except IntegrityError:
@@ -78,8 +82,10 @@ def read_member(search_parameters):
     result = c.fetchone()
 
     if not result:
+        log("Read Member", f"User cannot be found in database")
         return False, "User cannot be found"
 
+    log("Read Member", f"User found in database and result returned")
     return True, result
 
 

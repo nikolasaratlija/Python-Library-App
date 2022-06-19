@@ -18,6 +18,8 @@ def add_advisor(advisor_username, advisor_pass):
             f"Advisor named '{advisor_username}' has been added to the system")
         return True, f"Advisor named '{advisor_username}' has been added to the system"
     except IntegrityError:
+        log("Advisor Not Added",
+            f"Advisor named '{advisor_username}' is not added to the system")
         return True, f"Error adding advisor. Possibly because username already exists"
 
 
@@ -35,6 +37,7 @@ def delete_advisor(advisor_id):
         log("Advisor Deleted", f"Advisor '#{advisor_id}' has been deleted from the system")
         return True, f"Advisor '#{advisor_id}' has been removed"
     else:
+        log("Advisor Not Deleted", f"Advisor '#{advisor_id}' does not exist")
         return False, f"Advisor '#{advisor_id}' does not exist"
 
 
@@ -42,8 +45,15 @@ def reset_advisor_password(new_temp_password, advisor_id):
     con = Context.db_connection
     c = con.cursor()
     c.execute("UPDATE users SET password = ? WHERE id = ? AND role_id = 3", (new_temp_password, advisor_id))
-    con.commit()
-    print("Password Updated")
+
+    if c.rowcount == 1:
+        con.commit()
+        log("Reset Password", f"Advisor '#{advisor_id}' has had their password changed")
+        return True, f"Advisor '#{advisor_id}' has had their password changed"
+    else:
+        log("Reset Password", f"Advisor '#{advisor_id}' does not exist")
+        return False, f"Advisor '#{advisor_id}' does not exist"
+
 
 
 def read_all_users(search_parameters=None):
