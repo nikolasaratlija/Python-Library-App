@@ -10,9 +10,9 @@ def prompt_input(prompter):
 def single_choice(prompter, choices):
     """ Keeps prompting until user types in one of the options """
     options = list([option[1] for option in choices])
-    print(f"Please pick one of the following options: {', '.join(options)}")  # only displays the names, not the ids
 
     while True:
+        print(f"Please pick one of the following options: {', '.join(options)}")  # only displays the names, not the ids
         value = prompter()
 
         for index, choice in enumerate(options):
