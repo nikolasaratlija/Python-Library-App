@@ -31,7 +31,7 @@ class AdvisorMenu(Menu):
         # displays list of cities and prompts user to pick one
         city = single_choice(lambda: safe_input("Please enter a city name: "), city_options)
 
-        advisor_service.add_member(
+        result = advisor_service.add_member(
             Member(
                 first_name=first_name,
                 last_name=last_name,
@@ -40,6 +40,8 @@ class AdvisorMenu(Menu):
                 phone=phone,
                 city_id=city[0]  # id of city
             ))
+
+        print(result[1])
 
         self._back()
 
