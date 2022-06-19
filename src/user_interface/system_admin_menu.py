@@ -52,7 +52,7 @@ class SystemAdminMenu(AdvisorMenu):
         self._back()
 
     def delete_advisor(self):
-        advisor_id = prompt_input(lambda: safe_input("Please enter Member id", is_digit))
+        advisor_id = prompt_input(lambda: safe_input("Please enter Advisor id", is_digit))
 
         result = system_admin_service.delete_advisor(advisor_id)
 
